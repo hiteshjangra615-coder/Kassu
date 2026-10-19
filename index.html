@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="hi">
 <head>
+<!-- gap-fix v2 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -800,7 +801,14 @@ panel.addEventListener('click',e=>{
  if(b.dataset.action==='saveNotice'){const m=document.getElementById('thoughtMessage');m.textContent='Yeh text isi page par tab tak rahega jab tak aap page refresh ya close nahi karti. Kahin send ya permanently save nahi hota. 🤍';m.classList.add('show');}
  if(b.dataset.action==='restart')go(0);
 });
-function glideTo(el,block){if(!el)return;el.style.scrollMarginTop='18px';el.style.scrollMarginBottom='18px';setTimeout(()=>{try{el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:block||'center'});}catch(_){el.scrollIntoView();}},80);}
+function glideTo(el,block){if(!el)return;setTimeout(()=>{
+  /* v2: sirf page (window) scroll hota hai, card ke andar kabhi nahi */
+  const r=el.getBoundingClientRect(),vh=window.innerHeight,pad=18;
+  let y=block==='start'?r.top-pad:r.top-(vh-r.height)/2;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({top:Math.max(0,window.scrollY+y),behavior:reduce?'auto':'smooth'});
+  const P=document.getElementById('panel');if(P){P.scrollTop=0;P.scrollLeft=0;}
+ },80);}
 function sprinkle(chars){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<12;i++){const s=document.createElement('span');s.className='sprinkle';s.textContent=chars[Math.floor(Math.random()*chars.length)];s.style.left=(8+Math.random()*84)+'vw';s.style.top=(48+Math.random()*30)+'vh';document.body.appendChild(s);setTimeout(()=>s.remove(),1400);}}
 document.addEventListener('keydown',e=>{if(!document.body.classList.contains('opened'))return;if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'&&index<chapters.length-1)go(index+1);if(e.key==='ArrowLeft'&&index>0)go(index-1);});
 window.__kassuEnter=()=>{if(index===0)render();playTurn('next');};
