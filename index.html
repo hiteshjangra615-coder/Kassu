@@ -446,6 +446,49 @@ html,body{touch-action:pan-y pinch-zoom}
 .cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 6.4vh);font-size:14.5px;color:#ffc6ec;text-shadow:0 1px 3px rgba(14,3,42,.95),0 0 14px rgba(255,140,215,.55)}
 .cover-psst span{color:#ffe7ae;font-weight:700;text-shadow:0 1px 3px rgba(14,3,42,.95),0 0 14px rgba(255,205,120,.6)}
 @media(max-height:660px){.cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 3.2vh)}}
+
+/* ==========================================================
+   FROSTED PURPLE GLASS — matches the reference screenshot
+   (background photo + glass look only; text, chapters, animations untouched)
+   Keep this block LAST in <style>.
+   ========================================================== */
+:root{--glass-tint:.30;--glass-blur:14px;--glass-glow:.38}
+body{background:#1c0f45 url('purple-sky.jpg') center center/cover fixed no-repeat}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(60,30,140,.18) 0%,rgba(120,80,210,.06) 55%,rgba(200,150,240,.10) 100%)}
+.panel{
+  background:
+    linear-gradient(140deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.05) 40%,rgba(190,150,255,.12) 100%),
+    rgba(120,85,215,var(--glass-tint));
+  border:1.5px solid rgba(225,200,255,.62);
+  border-radius:34px;
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(140%);
+  backdrop-filter:blur(var(--glass-blur)) saturate(140%);
+  box-shadow:0 0 0 1px rgba(190,150,255,.18),0 0 30px rgba(175,120,255,var(--glass-glow)),
+    0 16px 44px rgba(25,6,70,.25),inset 0 0 40px rgba(215,185,255,.16),inset 0 1px 0 rgba(255,255,255,.45)}
+@media(max-width:480px){.panel{border-radius:30px;
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(140%);backdrop-filter:blur(var(--glass-blur)) saturate(140%)}}
+.soft-note,.message,.privacy,.letter-promise,.qual{
+  background:linear-gradient(135deg,rgba(255,255,255,.20),rgba(190,150,255,.14));
+  border:1px solid rgba(235,215,255,.55);
+  -webkit-backdrop-filter:blur(8px) saturate(130%);backdrop-filter:blur(8px) saturate(130%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 20px rgba(220,190,255,.10)}
+.choice,.gift{
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(190,150,255,.12));
+  border:1px solid rgba(235,215,255,.5);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.thoughts{background:rgba(70,35,150,.30);border:1px solid rgba(235,215,255,.6);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.btn.secondary,.counter{
+  background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(150,115,235,.26));
+  border:1px solid rgba(235,215,255,.7);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 16px rgba(60,20,130,.20)}
+.btn:not(.secondary){background:linear-gradient(100deg,#ff7ec2 0%,#c470ee 55%,#9d72ff 100%);
+  box-shadow:0 6px 22px rgba(235,100,200,.35),inset 0 1px 0 rgba(255,255,255,.45)}
+.track{background:rgba(235,225,250,.72)}
+.panel p,.panel .letter-paragraph,.panel .soft-note,.panel .message,.panel small,.panel strong{
+  text-shadow:0 1px 6px rgba(40,10,100,.35)}
 </style>
 </head>
 <body>
@@ -606,13 +649,13 @@ function endingSequence(){
  if(reduce){['letterPromise','letterSign','letterWish','letterDM'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});return;}
  const at=(ms,fn)=>endTimers.push(setTimeout(()=>{if(document.getElementById('letterContent'))fn();},ms));
  at(300,()=>sprinkle(['✦','✧','💜','✨']));
- at(1000,()=>revealEl('letterPromise'));
- /* heart paragraph ke turant baad (pehle 3.3s ka gap tha) */
- at(1900,heartOfStars);
- at(5600,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);});
- at(6200,()=>revealEl('letterWish'));
- at(8000,()=>revealEl('letterSign'));
- at(9600,()=>revealEl('letterDM'));
+ at(1200,()=>revealEl('letterPromise'));
+ 
+ at(4500,heartOfStars);
+ at(8400,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);});
+ at(9000,()=>revealEl('letterWish'));
+ at(10800,()=>revealEl('letterSign'));
+ at(12400,()=>revealEl('letterDM'));
 }
 function finishLetter(){
  clearLetterTimer();
