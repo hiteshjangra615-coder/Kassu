@@ -418,6 +418,29 @@ html,body{touch-action:pan-y pinch-zoom}
 .back-up:hover{background:rgba(255,255,255,.18)}
 /* ===== FIX: card ke andar content scroll hokar neeche khaali gap nahi banna chahiye ===== */
 .panel{overflow:hidden;overflow:clip}
+
+/* ===== moon hint: soft halo + moon khud bolta hai (button jaisa nahi) ===== */
+.moon-wrap::before,.moon-wrap::after{content:"";position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;border:2px solid rgba(255,205,240,.6);box-shadow:0 0 14px rgba(255,170,230,.35);pointer-events:none;opacity:0;animation:moonRipple 3.2s ease-out 1.4s infinite}
+.moon-wrap::after{animation-delay:3s}
+@keyframes moonRipple{0%{transform:scale(.75);opacity:0}15%{opacity:.8}100%{transform:scale(1.9);opacity:0}}
+.moon-wrap.tapped::before,.moon-wrap.tapped::after{display:none}
+.moon-bubble.hint{background:rgba(255,236,250,.97)}
+@media(prefers-reduced-motion:reduce){.moon-wrap::before{animation:none;opacity:.55;transform:scale(1.15)}.moon-wrap::after{display:none}}
+
+/* ===== moon dots (kitne messages) + har tap par ripple ===== */
+.moon-dots{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:2px;display:flex;gap:8px;pointer-events:none;opacity:0;animation:coverIn 1s ease 1.6s forwards}
+.moon-dots i{display:block;width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,205,240,.75);background:transparent;transition:background .35s ease,box-shadow .35s ease,transform .35s ease}
+.moon-dots i.on{background:#ff9edb;border-color:#ffd0f0;box-shadow:0 0 8px rgba(255,150,220,.95);transform:scale(1.1)}
+.moon-dots i.next{animation:dotNext 1.6s ease-in-out infinite}
+@keyframes dotNext{0%,100%{box-shadow:0 0 0 0 rgba(255,170,230,.0)}50%{box-shadow:0 0 0 4px rgba(255,170,230,.35)}}
+.moon-wrap.rip::before,.moon-wrap.rip::after{display:block;animation:moonRipple 1.8s ease-out 1 forwards}
+.moon-wrap.rip::after{animation-delay:.45s}
+@media(prefers-reduced-motion:reduce){.moon-dots{opacity:1;animation:none}.moon-dots i.next{animation:none}}
+
+/* ===== fix: moon bubble upar wali 2 lines (psst) par nahi aani chahiye ===== */
+.cover{padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+.cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 3.2vh)}
+.moon-bubble{max-width:min(320px,92vw);font-size:12.5px;line-height:1.35;padding:7px 13px;white-space:normal}
 </style>
 </head>
 <body>
@@ -877,12 +900,39 @@ render();playTurn('next');
   const wrap=document.getElementById('moonWrap'),moon=document.getElementById('coverMoon'),bub=document.getElementById('moonBubble');
   const says=['hehe 🙈 gudgudi hoti hai!','arre arre 🌙 dheere!','aap bohot pyaari hain, pata hai? 🥺','ek raaz bataun? aap akeli nahi hain 🤍','ab neeche wala envelope bhi kholiye 💌'];
   let n=0,bt=null;
+  const faces=['🌝','🌛','🌜','🌕','🌙'];let rt=null;
+  const dotsEl=document.createElement('div');dotsEl.className='moon-dots';dotsEl.setAttribute('aria-hidden','true');
+  for(let i=0;i<5;i++){const d=document.createElement('i');dotsEl.appendChild(d);}
+  if(wrap)wrap.appendChild(dotsEl);
+  const dots=[...dotsEl.children];
+  dots[0]&&dots[0].classList.add('next');
   if(wrap)wrap.addEventListener('click',()=>{
    bub.textContent=says[n%says.length];n++;
    bub.classList.add('show');clearTimeout(bt);bt=setTimeout(()=>bub.classList.remove('show'),2600);
    wrap.classList.remove('poke');void wrap.offsetWidth;wrap.classList.add('poke');
-   moon.textContent='🌝';setTimeout(()=>{moon.textContent='🌙';},650);
+   const k=((n-1)%5)+1;
+   moon.textContent=faces[k-1];
+   moon.style.filter='drop-shadow(0 0 '+(14+k*4)+'px rgba(255,235,200,'+(.8+k*.04)+')) drop-shadow(0 0 '+(34+k*8)+'px rgba(190,150,255,'+(.7+k*.05)+'))';
+   dots.forEach((d,i)=>{d.classList.toggle('on',i<k);d.classList.toggle('next',i===k&&k<5);});
+   if(k<5&&!reduceM){wrap.classList.remove('rip');void wrap.offsetWidth;wrap.classList.add('rip');clearTimeout(rt);rt=setTimeout(()=>wrap.classList.remove('rip'),2600);}
+   else wrap.classList.remove('rip');
+   if(!reduceM&&window.__coverPop&&k===5){const r=moon.getBoundingClientRect();window.__coverPop(r.left+r.width/2,r.top+r.height/2,['✨','💗','🌸'],8,70);}
   });
+  /* hint: jab tak pehli baar moon par tap nahi hota, moon khud bulata hai */
+  let tapped=false,hintN=0,ht=null;
+  const hints=['psst… mujhe chhoo ke dekhiye 🌙👆','arre, ek baar tap to kijiye 🌙','main kuch kehna chahta hoon… tap kijiye 🤍'];
+  function sayHint(){
+   if(tapped||cv.classList.contains('gone')||cv.classList.contains('opening'))return;
+   if(hintN>=4)return;
+   bub.textContent=hints[hintN%hints.length];hintN++;
+   bub.classList.add('show','hint');clearTimeout(bt);bt=setTimeout(()=>{bub.classList.remove('show','hint');},3400);
+   if(!reduceM){wrap.classList.remove('poke');void wrap.offsetWidth;wrap.classList.add('poke');}
+   ht=setTimeout(sayHint,9500);
+  }
+  if(wrap){
+   ht=setTimeout(sayHint,1800);
+   wrap.addEventListener('click',()=>{tapped=true;clearTimeout(ht);wrap.classList.add('tapped');bub.classList.remove('hint');},true);
+  }
   const lab=document.getElementById('envLabel');
   if(lab)lab.addEventListener('click',()=>{const b=document.getElementById('beginBtn');if(b)b.click();});
  })();
