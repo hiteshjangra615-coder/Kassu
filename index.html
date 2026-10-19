@@ -415,6 +415,8 @@ html,body{touch-action:pan-y pinch-zoom}
 .back-up{display:block;margin:12px auto 0;padding:9px 20px;border-radius:999px;border:1px solid rgba(238,208,255,.5);background:rgba(255,255,255,.1);color:#ffe9fb;font-size:14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .back-up[hidden]{display:none}
 .back-up:hover{background:rgba(255,255,255,.18)}
+/* ===== FIX: card ke andar content scroll hokar neeche khaali gap nahi banna chahiye ===== */
+.panel{overflow:hidden;overflow:clip}
 </style>
 </head>
 <body>
@@ -952,6 +954,13 @@ render();playTurn('next');
    setTimeout(function(){ if(!left && !document.hidden) window.location.href=WEB; },1200);
   }
  });
+})();
+
+/* FIX: scrollIntoView kabhi card ke andar content ko upar nahi khiskaye -> blank gap nahi aayega */
+(function(){const p=document.getElementById('panel');if(!p)return;
+ const lock=()=>{if(p.scrollTop)p.scrollTop=0;if(p.scrollLeft)p.scrollLeft=0;};
+ p.addEventListener('scroll',lock,{passive:true});
+ new MutationObserver(lock).observe(p,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden']});
 })();
 </script>
 </body>
