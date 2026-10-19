@@ -606,13 +606,13 @@ function endingSequence(){
  if(reduce){['letterPromise','letterSign','letterWish','letterDM'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});return;}
  const at=(ms,fn)=>endTimers.push(setTimeout(()=>{if(document.getElementById('letterContent'))fn();},ms));
  at(300,()=>sprinkle(['✦','✧','💜','✨']));
- at(1200,()=>revealEl('letterPromise'));
- 
- at(4500,heartOfStars);
- at(8400,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);});
- at(9000,()=>revealEl('letterWish'));
- at(10800,()=>revealEl('letterSign'));
- at(12400,()=>revealEl('letterDM'));
+ at(1000,()=>revealEl('letterPromise'));
+ /* heart paragraph ke turant baad (pehle 3.3s ka gap tha) */
+ at(1900,heartOfStars);
+ at(5600,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);});
+ at(6200,()=>revealEl('letterWish'));
+ at(8000,()=>revealEl('letterSign'));
+ at(9600,()=>revealEl('letterDM'));
 }
 function finishLetter(){
  clearLetterTimer();
