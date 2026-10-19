@@ -556,26 +556,16 @@ radial-gradient(circle,#fff 0 1.6px,rgba(255,205,245,.55) 3px,rgba(210,150,255,.
   text-shadow:0 1px 3px rgba(20,5,70,.60),0 0 10px rgba(20,5,70,.35)}
 
 
+
 /* ==========================================================
-   TAP EFFECTS for chapter 3 (moods) + chapter 4 (gifts) + cross-device safety
+   CHAPTER 3 + 4 TAP TOUCHES: short and cute, nothing loops forever
+   Gift tap: soft tint for that message, a few emojis drift once and stop.
    ========================================================== */
-.mood-fx .pt{position:absolute;top:-8vh;font-style:normal;filter:drop-shadow(0 0 6px rgba(255,190,240,.6));animation:ptFall linear infinite;will-change:transform}
-@keyframes ptFall{0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}10%{opacity:.95}50%{transform:translate3d(24px,55vh,0) rotate(160deg)}100%{transform:translate3d(-16px,112vh,0) rotate(320deg);opacity:0}}
-.mood-fx .side{position:absolute;left:-12vw;font-style:normal;opacity:0;animation:sideGo linear infinite;will-change:transform}
-@keyframes sideGo{0%{transform:translate3d(0,0,0) rotate(-6deg);opacity:0}8%{opacity:.95}50%{transform:translate3d(60vw,-14px,0) rotate(6deg)}92%{opacity:.95}100%{transform:translate3d(125vw,0,0) rotate(-4deg);opacity:0}}
-.mood-fx .car{position:absolute;left:-14vw;bottom:9vh;font-size:44px;font-style:normal;animation:carGo 7s linear infinite;filter:drop-shadow(0 4px 8px rgba(30,5,70,.45));will-change:transform}
-.mood-fx .car.c2{bottom:16vh;font-size:32px;opacity:.85;animation-duration:10s;animation-delay:-4s}
-@keyframes carGo{0%{transform:translate3d(0,0,0) scaleX(-1)}100%{transform:translate3d(130vw,0,0) scaleX(-1)}}
-.mood-fx .paw{position:absolute;font-style:normal;opacity:0;animation:pawStep 6s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(255,200,230,.7))}
-@keyframes pawStep{0%{opacity:0;transform:scale(.6) rotate(var(--r,0deg))}8%{opacity:.95;transform:scale(1) rotate(var(--r,0deg))}45%{opacity:.8;transform:scale(1) rotate(var(--r,0deg))}72%,100%{opacity:0;transform:scale(1) rotate(var(--r,0deg))}}
-.mood-fx .steam{position:absolute;bottom:-6vh;width:70px;height:120px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.38),rgba(255,255,255,0));-webkit-filter:blur(8px);filter:blur(8px);animation:steamUp linear infinite;will-change:transform}
-@keyframes steamUp{0%{transform:translate3d(0,0,0) scale(.6);opacity:0}20%{opacity:.75}100%{transform:translate3d(20px,-70vh,0) scale(1.6);opacity:0}}
-.mood-fx .tw{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s)/-2) 0 0 calc(var(--s)/-2);-webkit-filter:drop-shadow(0 0 6px rgba(255,220,255,.95));filter:drop-shadow(0 0 6px rgba(255,220,255,.95));animation:twinkle var(--d) ease-in-out infinite}
-.mood-fx .tw i{display:block;width:100%;height:100%;background:linear-gradient(135deg,#fff,#ffd9ff);-webkit-clip-path:polygon(50% 0,59% 41%,100% 50%,59% 59%,50% 100%,41% 59%,0 50%,41% 41%);clip-path:polygon(50% 0,59% 41%,100% 50%,59% 59%,50% 100%,41% 59%,0 50%,41% 41%)}
-.mood-fx .ring{position:absolute;left:50%;top:46%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid rgba(255,170,220,.85);box-shadow:0 0 14px rgba(255,150,220,.6);opacity:0;animation:ringOut 3.2s ease-out infinite}
-@keyframes ringOut{0%{transform:scale(1);opacity:.9}100%{transform:scale(14);opacity:0}}
-.mood-fx .bigem{position:absolute;left:50%;top:46%;margin:-36px 0 0 -36px;font-size:64px;font-style:normal;filter:drop-shadow(0 0 18px rgba(255,150,220,.9));animation:bigPulse 2.4s ease-in-out infinite}
-@keyframes bigPulse{0%,100%{transform:scale(.85);opacity:.6}50%{transform:scale(1.15);opacity:1}}
+.mood-fx .gfx{position:absolute;opacity:0;font-style:normal;line-height:1;filter:drop-shadow(0 0 6px rgba(255,200,240,.55));will-change:transform,opacity}
+.mood-fx .gfx-down{top:-8vh;animation:gfxDown linear both}
+.mood-fx .gfx-up{bottom:-8vh;animation:gfxUp linear both}
+@keyframes gfxDown{0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}12%{opacity:.8}85%{opacity:.7}100%{transform:translate3d(16px,112vh,0) rotate(150deg);opacity:0}}
+@keyframes gfxUp{0%{transform:translate3d(0,0,0) scale(.85);opacity:0}12%{opacity:.8}85%{opacity:.7}100%{transform:translate3d(-14px,-112vh,0) scale(1.05);opacity:0}}
 .mood-g0::before{background:radial-gradient(90% 60% at 50% 100%,rgba(255,150,210,.20),transparent 65%)}
 .mood-g1::before{background:radial-gradient(90% 55% at 50% 100%,rgba(255,170,90,.22),transparent 65%)}
 .mood-g2::before{background:radial-gradient(70% 50% at 20% 100%,rgba(120,220,150,.18),transparent 65%),radial-gradient(70% 50% at 85% 0%,rgba(190,140,255,.22),transparent 70%)}
@@ -584,7 +574,6 @@ radial-gradient(circle,#fff 0 1.6px,rgba(255,205,245,.55) 3px,rgba(210,150,255,.
 .mood-g5::before{background:radial-gradient(60% 45% at 50% 46%,rgba(255,150,210,.24),transparent 70%)}
 .mood-g6::before{background:radial-gradient(90% 50% at 50% 100%,rgba(255,200,150,.18),transparent 65%)}
 .mood-g7::before{background:linear-gradient(180deg,rgba(25,10,80,.30),rgba(40,15,110,.12))}
-@media(min-width:900px){.mood-fx .car{font-size:64px}.mood-fx .car.c2{font-size:46px}.mood-fx .bigem{font-size:92px;margin:-52px 0 0 -52px}.mood-fx .steam{width:100px;height:170px}}
 
 /* old iPhone / iPad Safari fallbacks (no `inset`, no dvh) */
 body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;left:0;right:0;bottom:0}
@@ -833,25 +822,29 @@ function playTurn(dir){
 }
 /* ---- mood-reactive background (feature 4) ---- */
 const moodfx=document.getElementById('moodfx'), moodtop=document.getElementById('moodtop');
-function clearMoodFx(){[moodfx,moodtop].forEach(el=>{if(el){el.className=el.id==='moodtop'?'mood-fx mood-top':'mood-fx';el.innerHTML='';}});}
+let gFxTimer=null;
+function clearMoodFx(){clearTimeout(gFxTimer);[moodfx,moodtop].forEach(el=>{if(el){el.className=el.id==='moodtop'?'mood-fx mood-top':'mood-fx';el.innerHTML='';}});}
 
-/* ---- per-message tap effects: chapter 3 (moods) + chapter 4 (gifts) ---- */
+/* ---- per-message tap touches: chapter 3 (moods) + chapter 4 (gifts). Short and cute; nothing loops forever ---- */
 const moodSprinkle={heavy:['🤍','💧','✨'],tired:['🌙','💤','☁️'],alone:['🌙','⭐','🤍'],happy:['🍓','🌸','🐣']};
-const giftSprinkle=[['💌','💗','✨'],['🍛','😂','🌶️'],['💜','🌿','✨'],['🌿','🚗','☁️'],['🌷','🌸','✨'],['🫶','💗','✨'],['🐱','🐾','💗'],['🎶','🎵','✨']];
+const giftSprinkle=[['💌','💗','🤍'],['🍛','😂'],['💜','🍃'],['🌿','🍃'],['🌷','🌸'],['🫶','💗'],['🐾','🐱'],['🎶','✨']];
+const giftDrift=[
+ {c:['💌','💗','🤍','💌','💗','🤍'],up:true},
+ {c:['🍛','😂','🍛','😂','🍛','😂'],up:false},
+ {c:['💜','🍃','💜','🍃','💜','🍃'],up:false},
+ {c:['🌿','🍃','🌿','🍃','🌿','🍃'],up:false},
+ {c:['🌷','🌸','🌷','🌸','🌷','🌸'],up:false},
+ {c:['🫶','💗','🫶','💗','🫶','💗'],up:true},
+ {c:['🐾','🐱','🐾','🐾','🐱','🐾'],up:false},
+ {c:['🎶','✨','🎵','✨','🎶','🎵'],up:true}
+];
 function giftFx(kind,R){
- const k=innerWidth>900?1.5:1,n=Number(kind.slice(1));let h='';
- const px=(a,b)=>(R(a,b)*k).toFixed(0);
- const rise=(a,c,s1,s2,d1,d2)=>{for(let i=0;i<c;i++)h+=`<em class="fl" style="left:${R(4,92).toFixed(1)}%;font-size:${px(s1,s2)}px;animation-duration:${R(d1,d2).toFixed(1)}s;animation-delay:${(-R(0,d2)).toFixed(1)}s">${a[i%a.length]}</em>`;};
- const fall=(a,c,s1,s2,d1,d2)=>{for(let i=0;i<c;i++)h+=`<em class="pt" style="left:${R(3,94).toFixed(1)}%;font-size:${px(s1,s2)}px;animation-duration:${R(d1,d2).toFixed(1)}s;animation-delay:${(-R(0,d2)).toFixed(1)}s">${a[i%a.length]}</em>`;};
- const tw=c=>{for(let i=0;i<c;i++)h+=`<span class="tw" style="left:${R(3,95).toFixed(1)}%;top:${R(4,88).toFixed(1)}%;--s:${px(10,20)}px;--d:${R(2.2,4.6).toFixed(1)}s;animation-delay:${(-R(0,4)).toFixed(1)}s"><i></i></span>`;};
- if(n===0){rise(['💌','💗','🤍','✨','💜'],14,18,30,8,13);tw(6);}
- else if(n===1){for(let i=0;i<7;i++)h+=`<i class="steam" style="left:${R(6,88).toFixed(1)}%;animation-duration:${R(5,9).toFixed(1)}s;animation-delay:${(-R(0,9)).toFixed(1)}s"></i>`;rise(['🍛','🍚','🌶️','😂','🍋'],10,20,32,8,14);}
- else if(n===2){fall(['💜','🍃','🌿','💜','🍃'],16,16,26,9,16);tw(8);}
- else if(n===3){h+=`<em class="car">🚗</em><em class="car c2">🚙</em>`;for(let i=0;i<6;i++)h+=`<em class="side" style="top:${R(6,58).toFixed(0)}%;font-size:${px(20,32)}px;animation-duration:${R(14,22).toFixed(1)}s;animation-delay:${(-R(0,16)).toFixed(1)}s">${['☁️','🍃','🌿','📸','☁️','🍃'][i]}</em>`;}
- else if(n===4){fall(['🌷','🌸','🌷','🌼'],14,18,30,14,22);tw(5);}
- else if(n===5){for(let i=0;i<3;i++)h+=`<i class="ring" style="animation-delay:${(i*1.05).toFixed(2)}s"></i>`;h+=`<em class="bigem">🫶</em>`;rise(['💗','🫶','💖','✨'],10,18,28,9,14);}
- else if(n===6){for(let i=0;i<8;i++)h+=`<em class="paw" style="left:${(8+i*11+(i%2?3:-2))}%;top:${(78-i*8+(i%2?2:-2))}%;font-size:${px(24,30)}px;--r:${i%2?24:-18}deg;animation-delay:${(i*.55).toFixed(2)}s">🐾</em>`;rise(['🐱','💗','🐾'],5,20,30,9,14);}
- else if(n===7){rise(['🎶','🎵','🎼','🎶','✨'],14,18,30,8,14);tw(10);for(let i=0;i<2;i++)h+=`<s class="shoot" style="top:${R(4,34).toFixed(0)}%;animation-duration:${R(5,8).toFixed(1)}s;animation-delay:${(-R(0,6)).toFixed(1)}s"></s>`;}
+ const n=Number(kind.slice(1)),set=giftDrift[n]||giftDrift[0],big=innerWidth>900?1.25:1;
+ let h='';
+ set.c.forEach((e,i)=>{
+  const left=(7+i*(86/(set.c.length-1))+R(-2,2)).toFixed(1);
+  h+=`<em class="gfx ${set.up?'gfx-up':'gfx-down'}" style="left:${left}%;font-size:${(R(14,19)*big).toFixed(0)}px;animation-duration:${R(7,9.5).toFixed(1)}s;animation-delay:${(i*.55+R(0,.3)).toFixed(2)}s">${e}</em>`;
+ });
  return h;
 }
 function setMoodFx(kind){
@@ -872,6 +865,7 @@ function setMoodFx(kind){
  if(kind.charAt(0)==='g')h+=giftFx(kind,R);
  moodtop.innerHTML=h;
  requestAnimationFrame(()=>{moodfx.classList.add('on','mood-'+kind);moodtop.classList.add('on');});
+ if(kind.charAt(0)==='g'){clearTimeout(gFxTimer);gFxTimer=setTimeout(()=>{moodtop.innerHTML='';},13000);}
 }
 const SONG_ID='7pkQKhYd7YH1s4ocurkVKG';   /* Spotify track: used only as backup */
 const YT_IDS=['c4YI39LgRVQ','WfYDVTpxfHY','iv-VE7BbqO0','OFrdfsIuO5Q'];                 /* YouTube videos tried in order (if one can't be embedded, the next is used, then Spotify). Add or swap IDs here. */
@@ -984,7 +978,7 @@ prev.addEventListener('click',()=>go(index-1));next.addEventListener('click',()=
 panel.addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
  if(b.dataset.mood){const el=document.getElementById('moodMessage');el.textContent=moodText[b.dataset.mood];el.classList.add('show');setMoodFx(b.dataset.mood);sprinkle(moodSprinkle[b.dataset.mood]||['💗','✨']);glideTo(el,'center');return;}
- if(b.dataset.gift!==undefined){const n=Number(b.dataset.gift), el=document.getElementById('giftMessage');el.textContent=gifts[n];el.classList.add('show');b.classList.add('opened');b.querySelector('small').textContent='opened with care 💗';sprinkle(giftSprinkle[n]||['💗','✨','🌷']);setMoodFx('g'+n);if(n===7)showSong();const bk=document.getElementById('backToGifts');if(bk)bk.hidden=false;glideTo(el,n===7?'start':'center');return;}
+ if(b.dataset.gift!==undefined){const n=Number(b.dataset.gift), el=document.getElementById('giftMessage');el.textContent=gifts[n];el.classList.add('show');b.classList.add('opened');b.querySelector('small').textContent='opened with care 💗';sprinkle(giftSprinkle[n]||['💗','✨'],4);setMoodFx('g'+n);if(n===7){showSong();const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);}const bk=document.getElementById('backToGifts');if(bk)bk.hidden=false;glideTo(el,n===7?'start':'center');return;}
  if(b.dataset.action==='backToGifts'){const g=panel.querySelector('.gift-grid');if(g)glideTo(g,'start');return;}
  if(b.dataset.action==='openLetter'){startLetter();return;}
   if(b.dataset.action==='skipLetter'){finishLetter();return;}
@@ -1002,7 +996,7 @@ function glideTo(el,block){if(!el)return;setTimeout(()=>{
   window.scrollTo({top:Math.max(0,window.scrollY+y),behavior:reduce?'auto':'smooth'});
   const P=document.getElementById('panel');if(P){P.scrollTop=0;P.scrollLeft=0;}
  },80);}
-function sprinkle(chars){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<12;i++){const s=document.createElement('span');s.className='sprinkle';s.textContent=chars[Math.floor(Math.random()*chars.length)];s.style.left=(8+Math.random()*84)+'vw';s.style.top=(48+Math.random()*30)+'vh';document.body.appendChild(s);setTimeout(()=>s.remove(),1400);}}
+function sprinkle(chars,count){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<(count||12);i++){const s=document.createElement('span');s.className='sprinkle';s.textContent=chars[Math.floor(Math.random()*chars.length)];s.style.left=(8+Math.random()*84)+'vw';s.style.top=(48+Math.random()*30)+'vh';document.body.appendChild(s);setTimeout(()=>s.remove(),1400);}}
 document.addEventListener('keydown',e=>{if(!document.body.classList.contains('opened'))return;if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'&&index<chapters.length-1)go(index+1);if(e.key==='ArrowLeft'&&index>0)go(index-1);});
 window.__kassuEnter=()=>{if(index===0)render();playTurn('next');};
 render();playTurn('next');
