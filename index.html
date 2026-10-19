@@ -533,6 +533,27 @@ radial-gradient(circle,#fff 0 1.6px,rgba(255,205,245,.55) 3px,rgba(210,150,255,.
 .track{background:rgba(228,215,250,.80)}
 .panel p,.panel .letter-paragraph,.panel .soft-note,.panel .message,.panel small,.panel strong{
   text-shadow:0 1px 4px rgba(30,8,90,.30)}
+
+/* ==========================================================
+   CLEAR GLASS INNER BOXES — gifts, messages, notes, letter boxes, choices
+   No tint wall, no blur: stars & clouds show straight through.
+   Keep this block LAST in <style>.
+   ========================================================== */
+:root{--glass-blur:0px}
+.panel,.panel:is(.turn-next,.turn-prev){-webkit-backdrop-filter:blur(0px) saturate(120%);backdrop-filter:blur(0px) saturate(120%)}
+@media(max-width:480px){.panel{-webkit-backdrop-filter:blur(0px) saturate(120%);backdrop-filter:blur(0px) saturate(120%)}}
+.soft-note,.message,.privacy,.letter-promise,.qual,.choice,.gift,.song-card,.letter-final,.thoughts{
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015)) !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  border:1px solid rgba(228,205,255,.58) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.30),inset 0 0 14px rgba(215,180,255,.10),0 0 10px rgba(170,120,255,.16) !important}
+.thoughts{background:rgba(35,12,95,.14) !important}
+.choice:hover,.gift:hover{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04)) !important}
+.gift.opened{background:linear-gradient(135deg,rgba(255,150,215,.22),rgba(255,150,215,.06)) !important}
+.btn.secondary,.counter{-webkit-backdrop-filter:none;backdrop-filter:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(140,105,235,.16))}
+.panel p,.panel .letter-paragraph,.panel .soft-note,.panel .message,.panel small,.panel strong,.panel .qual{
+  text-shadow:0 1px 3px rgba(20,5,70,.60),0 0 10px rgba(20,5,70,.35)}
 </style>
 </head>
 <body>
