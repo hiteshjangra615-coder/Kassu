@@ -441,6 +441,11 @@ html,body{touch-action:pan-y pinch-zoom}
 .cover{padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
 .cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 3.2vh)}
 .moon-bubble{max-width:min(320px,92vw);font-size:12.5px;line-height:1.35;padding:7px 13px;white-space:normal}
+
+/* ===== psst lines: thoda niche, halka bada, rang ===== */
+.cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 6.4vh);font-size:14.5px;color:#ffc6ec;text-shadow:0 1px 3px rgba(14,3,42,.95),0 0 14px rgba(255,140,215,.55)}
+.cover-psst span{color:#ffe7ae;font-weight:700;text-shadow:0 1px 3px rgba(14,3,42,.95),0 0 14px rgba(255,205,120,.6)}
+@media(max-height:660px){.cover>.cover-psst{top:calc(env(safe-area-inset-top,0px) + 3.2vh)}}
 </style>
 </head>
 <body>
