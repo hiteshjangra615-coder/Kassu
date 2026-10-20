@@ -796,8 +796,7 @@ body.opened .chap-bg{opacity:1}
  background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(190,140,255,.16) 48%,rgba(255,150,208,.18));
  border:1px solid rgba(255,255,255,.5);
  box-shadow:0 12px 42px rgba(110,50,185,.5),inset 0 1px 0 rgba(255,255,255,.45);
- backdrop-filter:blur(14px) saturate(145%);-webkit-backdrop-filter:blur(14px) saturate(145%);
- animation:songIn .6s cubic-bezier(.2,1.1,.3,1) both,songGlow 4.5s ease-in-out .6s infinite}
+  animation:songIn .6s cubic-bezier(.2,1.1,.3,1) both}
 @keyframes songIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
 @keyframes songGlow{0%,100%{box-shadow:0 12px 42px rgba(110,50,185,.45),0 0 0 0 rgba(255,170,220,0),inset 0 1px 0 rgba(255,255,255,.45)}50%{box-shadow:0 12px 46px rgba(150,70,215,.6),0 0 26px 3px rgba(255,170,220,.35),inset 0 1px 0 rgba(255,255,255,.45)}}
 .song-title{font-size:17px;letter-spacing:.3px;margin-bottom:12px;color:#fff;text-shadow:0 2px 12px rgba(120,50,190,.6)}
@@ -805,7 +804,7 @@ body.opened .chap-bg{opacity:1}
  background:linear-gradient(#ffd9f1,#ffd9f1) 0 100%,linear-gradient(#ffd9f1,#ffd9f1) 5px 100%,linear-gradient(#ffd9f1,#ffd9f1) 10px 100%,linear-gradient(#ffd9f1,#ffd9f1) 15px 100%;
  background-repeat:no-repeat;background-size:3px 30%,3px 80%,3px 50%,3px 90%;animation:songEq 1.1s ease-in-out infinite}
 @keyframes songEq{0%,100%{background-size:3px 30%,3px 80%,3px 50%,3px 90%}50%{background-size:3px 90%,3px 35%,3px 90%,3px 30%}}
-#songHost iframe,.song-embed{border-radius:18px;opacity:.94;box-shadow:0 8px 26px rgba(45,15,85,.45)}
+#songHost iframe,.song-embed{border-radius:18px;box-shadow:0 8px 26px rgba(45,15,85,.45)}
 .song-note{font-size:13px;margin-top:10px;color:#fff4ff;opacity:.92;text-shadow:0 1px 8px rgba(110,50,185,.55)}
 @media (prefers-reduced-motion:reduce){.song-card,.song-title::after{animation:none}}
 </style>
@@ -1103,18 +1102,8 @@ function setMoodFx(kind){
  requestAnimationFrame(()=>{moodfx.classList.add('on','mood-'+kind);moodtop.classList.add('on');});
 }
 const SONG_ID='6bYS8v4EUP71kJ872aO0mt';   /* Spotify track */
-const SP_START=44;                        /* seconds: lyrics 46s se shuru, isliye 44 se start. Number badal sakte ho. */
 function showSong(){
  const card=document.getElementById('songCard');if(card)card.hidden=false;if(window.__kassuBg)window.__kassuBg.duck();
- const host=document.getElementById('songHost');if(!host||host.dataset.ready)return;host.dataset.ready='1';
- let late=false;setTimeout(function(){late=true;},6000);
- window.onSpotifyIframeApiReady=function(api){
-  if(late||!host.isConnected)return;
-  try{host.innerHTML='<div id="songMount"></div>';
-   api.createController(document.getElementById('songMount'),{uri:'spotify:track:'+SONG_ID,width:'100%',height:152,startAt:SP_START},function(){});
-  }catch(_){host.innerHTML='<iframe class="song-embed" title="Sirf aapka raaz" src="https://open.spotify.com/embed/track/'+SONG_ID+'?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';}
- };
- const sc=document.createElement('script');sc.src='https://open.spotify.com/embed/iframe-api/v1';sc.async=true;document.head.appendChild(sc);
 }
 function stopSong(){
  const a=document.getElementById('songAudio');
