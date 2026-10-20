@@ -67,7 +67,7 @@ h2{font-size:clamp(34px,7.2vw,42px);margin-bottom:18px;}
    ========================================================== */
 :root{
   --glass-tint:.31;
-  --glass-blur:2px;
+  --glass-blur:0px;
   --glass-glow:.42;
 }
 .panel{
@@ -654,12 +654,23 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
    Delete a line to remove that patch.
    ========================================================== */
 .sky-shade{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
+  -webkit-backdrop-filter:saturate(1.45) contrast(1.1) brightness(.92);backdrop-filter:saturate(1.45) contrast(1.1) brightness(.92);
   background:
-    radial-gradient(ellipse 58% 9% at 0% 44%,rgba(24,8,92,0.95),rgba(24,8,92,0.475) 45%,rgba(24,8,92,0) 100%),
-    radial-gradient(ellipse 58% 9% at 100% 58%,rgba(24,8,92,0.95),rgba(24,8,92,0.475) 45%,rgba(24,8,92,0) 100%),
-    radial-gradient(ellipse 42% 7% at 50% 71%,rgba(24,8,92,0.45),rgba(24,8,92,0.225) 45%,rgba(24,8,92,0) 100%),
-    radial-gradient(ellipse 58% 8% at 0% 83%,rgba(24,8,92,0.7),rgba(24,8,92,0.35) 45%,rgba(24,8,92,0) 100%),
-    radial-gradient(ellipse 55% 7% at 100% 94%,rgba(24,8,92,0.62),rgba(24,8,92,0.31) 45%,rgba(24,8,92,0) 100%)}
+    linear-gradient(180deg,rgba(40,14,120,.16),rgba(60,20,130,.10) 50%,rgba(70,25,120,.14)),
+    radial-gradient(ellipse 48% 10% at 0% 4%,rgba(24,8,92,0.850),rgba(24,8,92,0.468) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 40% 8% at 100% 9%,rgba(24,8,92,0.800),rgba(24,8,92,0.440) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 34% 7% at 52% 14%,rgba(24,8,92,0.550),rgba(24,8,92,0.303) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 11% at 0% 24%,rgba(24,8,92,0.950),rgba(24,8,92,0.522) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 46% 10% at 100% 30%,rgba(24,8,92,0.900),rgba(24,8,92,0.495) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 32% 7% at 48% 38%,rgba(24,8,92,0.550),rgba(24,8,92,0.303) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 54% 11% at 0% 46%,rgba(24,8,92,0.980),rgba(24,8,92,0.539) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 10% at 100% 53%,rgba(24,8,92,0.950),rgba(24,8,92,0.522) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 36% 8% at 50% 61%,rgba(24,8,92,0.600),rgba(24,8,92,0.330) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 52% 10% at 0% 70%,rgba(24,8,92,0.900),rgba(24,8,92,0.495) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 48% 10% at 100% 77%,rgba(24,8,92,0.850),rgba(24,8,92,0.468) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 34% 7% at 45% 84%,rgba(24,8,92,0.500),rgba(24,8,92,0.275) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 54% 9% at 0% 92%,rgba(24,8,92,0.800),rgba(24,8,92,0.440) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 9% at 100% 98%,rgba(24,8,92,0.750),rgba(24,8,92,0.413) 45%,rgba(24,8,92,0.000) 100%)}
 
 /* ==========================================================
    CHAPTER 6 — "Ek aur pyaari baat": har tap par line ka colour ek baar
@@ -701,6 +712,12 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
   opacity:0;animation:rlFlash 3s ease-out both}
 #letterFinal .wd,#letterPromise .wd{display:inline-block;position:relative;z-index:1;opacity:0;transform:translateY(6px);animation:wdIn .7s cubic-bezier(.22,1,.36,1) both}
 @media(prefers-reduced-motion:reduce){#letterFinal .wd,#letterPromise .wd{opacity:1!important;transform:none!important;animation:none!important}#letterFinal::before,#letterPromise::before{display:none!important}}
+
+
+/* CRISP GLASS — blur removed, see-through card stays sharp */
+.panel,.counter,.btn.secondary,.soft-note,.message,.privacy,.choice,.gift,.thoughts,.letter-final{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+.panel{-webkit-backdrop-filter:saturate(125%) !important;backdrop-filter:saturate(125%) !important}
+
 </style>
 </head>
 <body>
@@ -1313,3 +1330,4 @@ render();playTurn('next');
 </script>
 </body>
 </html>
+
