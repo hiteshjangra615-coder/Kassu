@@ -856,6 +856,77 @@ body.opened .chap-bg{opacity:1}
 .np-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:all .3s}
 .np-dots i.on{width:22px;border-radius:6px;background:linear-gradient(90deg,#ff9ee0,#b794ff);box-shadow:0 0 10px rgba(255,150,225,.8)}
 @media(prefers-reduced-motion:reduce){.np-stage .np-page,.np-stage .np-page.on{transition:none}}
+
+/* ==========================================================
+   CHAPTER 1 GIFT NOTE — "Moon glow" + "Key line highlight"
+   Moon glow: silver-blue moonlight in the corner, a soft moonbeam
+   that drifts across every few seconds, 3 tiny twinkling stars,
+   silver-lavender border.
+   Key line: "woh matter karta hai." gets a gentle shine, and
+   "Aapko abhi kuch prove karne ki zaroorat nahi." gets a glowing
+   line drawn under it (pink -> aqua).
+   Only this one box is changed. Text, layout, buttons are untouched.
+   ========================================================== */
+.soft-note.moon-note{position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(255,214,140,.42) 0,rgba(255,170,200,.18) 34%,rgba(255,170,200,0) 64%),
+    linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015)) !important;
+  border:1px solid rgba(255,208,160,.92) !important;
+  box-shadow:0 0 20px rgba(255,190,140,.38),inset 0 0 22px rgba(255,200,170,.16),inset 0 1px 0 rgba(255,255,255,.42) !important}
+/* breathing moon glow in the top-right corner */
+.moon-note::before{content:"";position:absolute;top:-46px;right:-46px;width:130px;height:130px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(255,228,160,.62) 0,rgba(255,176,196,.26) 40%,rgba(255,176,196,0) 70%);
+  opacity:.55;animation:mnGlow 4.8s ease-in-out 5s infinite}
+/* moonbeam that passes over the box every few seconds */
+.moon-note::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:34%;pointer-events:none;z-index:1;
+  background:linear-gradient(100deg,rgba(255,240,205,0) 0%,rgba(255,240,205,.32) 50%,rgba(255,240,205,0) 100%);
+  transform:translateX(-140%) skewX(-18deg);animation:mnBeam 7s ease-in-out 5.6s infinite}
+.moon-note .mn-text{position:relative;z-index:2}
+.moon-note .mn-star{position:absolute;z-index:1;width:var(--s);height:var(--s);pointer-events:none;background:#fff0c4;
+  clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
+  filter:drop-shadow(0 0 4px rgba(255,215,140,.95));opacity:.15;animation:mnTwinkle 3.6s ease-in-out infinite;animation-delay:var(--d)}
+.moon-note .mn-moon{display:inline-block;filter:drop-shadow(0 0 5px rgba(255,225,150,.85));animation:mnMoon 4.8s ease-in-out 5s infinite}
+/* key line 1: "woh matter karta hai." — a light shine passes over it */
+.moon-note .mn-k1{animation:mnShine 6s ease-in-out 5.8s infinite}
+/* key line 2: glowing line drawn under it, pink -> aqua */
+.moon-note .mn-k2{padding-bottom:2px;
+  background:linear-gradient(90deg,#ff8fd0 0%,#c9a4ff 50%,#8fe9ff 100%) no-repeat 0 100%/0% 2px;
+  animation:mnDraw 1.9s cubic-bezier(.22,1,.36,1) 5.4s forwards}
+@keyframes mnGlow{0%,100%{opacity:.45;transform:scale(.94)}50%{opacity:.95;transform:scale(1.08)}}
+@keyframes mnBeam{0%{transform:translateX(-140%) skewX(-18deg)}30%,100%{transform:translateX(420%) skewX(-18deg)}}
+@keyframes mnTwinkle{0%,100%{opacity:.15;transform:scale(.55) rotate(0deg)}50%{opacity:.95;transform:scale(1.1) rotate(12deg)}}
+@keyframes mnMoon{0%,100%{filter:drop-shadow(0 0 3px rgba(255,225,150,.55))}50%{filter:drop-shadow(0 0 9px rgba(255,235,170,1))}}
+@keyframes mnShine{0%,62%,100%{color:inherit;text-shadow:0 1px 3px rgba(20,5,70,.60),0 0 10px rgba(20,5,70,.35)}
+  80%{color:#fff;text-shadow:0 0 5px rgba(255,255,255,.95),0 0 14px rgba(255,170,230,.95),0 0 22px rgba(150,230,255,.7)}}
+@keyframes mnDraw{to{background-size:100% 2px}}
+/* wait for the cover tap, like the other chapter-1 intro animations */
+body:not(.opened) .moon-note::before,
+body:not(.opened) .moon-note::after,
+body:not(.opened) .moon-note .mn-star,
+body:not(.opened) .moon-note .mn-moon,
+body:not(.opened) .moon-note .mn-k1,
+body:not(.opened) .moon-note .mn-k2{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .moon-note::before,.moon-note::after,.moon-note .mn-star,.moon-note .mn-moon,.moon-note .mn-k1{animation:none!important}
+  .moon-note::after{display:none}.moon-note .mn-star{opacity:.7}
+  .moon-note .mn-k2{animation:none!important;background-size:100% 2px}}
+
+/* border light: one runner laps the box, a second comes back the other way
+   to the first corner, then two meet at one point (plays once, ~4 s) */
+.moon-note .mn-run{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:hidden}
+.moon-note .mn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:20 180;opacity:0;animation-fill-mode:both;animation-timing-function:ease-in-out}
+.moon-note .r1{stroke:#7ff6ff;filter:drop-shadow(0 0 5px #7ff6ff) drop-shadow(0 0 10px rgba(127,246,255,.8));animation:mnR1 1.5s 4.3s}
+.moon-note .r2{stroke:#ff86d6;filter:drop-shadow(0 0 5px #ff86d6) drop-shadow(0 0 10px rgba(255,134,214,.8));animation:mnR2 1.1s 5.9s}
+.moon-note .r3{stroke:#ffe08a;filter:drop-shadow(0 0 5px #ffd25e) drop-shadow(0 0 10px rgba(255,210,94,.8));animation:mnR3 .8s 7.1s}
+.moon-note .r4{stroke:#7ff6ff;filter:drop-shadow(0 0 5px #7ff6ff) drop-shadow(0 0 10px rgba(127,246,255,.8));animation:mnR4 .8s 7.1s}
+.moon-note .rf{stroke:#fff3c9;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #ffd98a);animation:mnFlash .6s 7.75s}
+@keyframes mnR1{0%{stroke-dashoffset:20;opacity:0}6%{opacity:1}90%{opacity:1}100%{stroke-dashoffset:-85;opacity:0}}
+@keyframes mnR2{0%{stroke-dashoffset:-50;opacity:0}8%{opacity:1}90%{opacity:1}100%{stroke-dashoffset:5;opacity:0}}
+@keyframes mnR3{0%{stroke-dashoffset:20;opacity:0}10%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-25;opacity:0}}
+@keyframes mnR4{0%{stroke-dashoffset:-50;opacity:0}10%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-25;opacity:0}}
+@keyframes mnFlash{0%{opacity:0}30%{opacity:.85}100%{opacity:0}}
+body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.moon-note .mn-run{display:none}}
 </style>
 </head>
 <body>
@@ -898,7 +969,7 @@ const chapters = [
 <div class="hero-lines">
 <p class="hl" style="--i:0">Yeh koi aisi jagah nahi jahan aapko khush dikhna ho, sab explain karna ho, ya har baat ka answer pata hona chahiye.</p>
 <p class="hl" style="--i:1">Bas kuch chhote messages, cute surprises aur thodi si narmi — jab aapka mann ho.</p>
-<div class="soft-note hl" style="--i:2">Aap jaisa mehsoos kar rahi hain, woh matter karta hai. Aapko abhi kuch prove karne ki zaroorat nahi. 🌙</div>
+<div class="soft-note hl moon-note" style="--i:2"><i class="mn-star" style="top:10px;right:14px;--s:9px;--d:0s" aria-hidden="true"></i><i class="mn-star" style="top:34px;right:38px;--s:6px;--d:-1.3s" aria-hidden="true"></i><i class="mn-star" style="bottom:12px;right:20px;--s:7px;--d:-2.2s" aria-hidden="true"></i><svg class="mn-run" aria-hidden="true" focusable="false"><rect class="r1" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r2" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r3" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r4" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="rf" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/></svg><span class="mn-text">Aap jaisa mehsoos kar rahi hain, <span class="mn-k1">woh matter karta hai.</span> <span class="mn-k2">Aapko abhi kuch prove karne ki zaroorat nahi.</span> <span class="mn-moon">🌙</span></span></div>
 </div>
 <div class="actions"><button class="btn" data-action="sparkle">A little sparkle ✨</button></div>
 <div class="hero-hint">jab ready ho, <b>Next →</b> dabaiye</div>`},
