@@ -793,6 +793,25 @@ body.opened .chap-bg{opacity:1}
  -webkit-backdrop-filter:none !important;backdrop-filter:none !important}
 .btn:not(.secondary){background:linear-gradient(100deg,#f777b5 0%,#c36cf0 58%,#a98af8 100%) !important;border:1px solid rgba(255,225,250,.5) !important}
 .track{background:rgba(236,226,255,.88) !important}
+.song-local{padding:4px 0}.song-local audio{width:100%;height:46px;border-radius:14px;display:block}
+
+/* ===== BETTER SONG CARD (gift ke message ke neeche) ===== */
+#songCard{padding:16px 14px 14px !important;border-radius:22px !important;
+ background:linear-gradient(160deg,rgba(255,170,230,.17),rgba(150,110,255,.14) 55%,rgba(255,255,255,.04)) !important;
+ border:1px solid rgba(240,205,255,.72) !important;
+ box-shadow:0 0 0 1px rgba(170,120,255,.16),0 10px 28px rgba(35,8,95,.38),0 0 26px rgba(255,140,220,.30),inset 0 1px 0 rgba(255,255,255,.42) !important;
+ animation:songIn .7s cubic-bezier(.2,.9,.3,1) both}
+@keyframes songIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+#songCard .song-head{display:flex;align-items:center;justify-content:center;gap:10px}
+#songCard .song-title{margin:0 !important;font-size:18px;letter-spacing:.2px;color:#fff;text-shadow:0 0 14px rgba(255,150,225,.75)}
+#songCard .eq{display:inline-flex;align-items:flex-end;gap:3px;height:17px}
+#songCard .eq i{display:block;width:3px;height:5px;border-radius:2px;background:linear-gradient(180deg,#ffd6f3,#c58bff);box-shadow:0 0 6px rgba(255,160,230,.7);animation:eqBar 1s ease-in-out infinite}
+#songCard .eq i:nth-child(2){animation-delay:-.35s}#songCard .eq i:nth-child(3){animation-delay:-.7s}#songCard .eq i:nth-child(4){animation-delay:-.15s}
+@keyframes eqBar{0%,100%{height:4px}50%{height:17px}}
+#songCard .song-sub{margin:5px 0 13px;font-size:12.5px;color:#f1deff;opacity:.9}
+#songHost{border-radius:16px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,222,250,.38),0 0 22px rgba(190,130,255,.5)}
+#songCard .song-note{display:inline-block;margin-top:13px;padding:7px 15px;border-radius:999px;font-size:12.5px;opacity:1;color:#fff;
+ background:rgba(255,255,255,.11);border:1px solid rgba(240,212,255,.5)}
 </style>
 </head>
 <body>
@@ -870,7 +889,7 @@ const chapters = [
 <button class="gift" data-gift="6"><span class="emoji">🐱</span><strong>Cute cats</strong><small>tap to open</small></button>
 <button class="gift" data-gift="7"><span class="emoji">🎶</span><strong>Sirf Aapka Raaz</strong><small>tap to open</small></button>
 </div><div class="message" id="giftMessage" role="status"></div>
-<div class="song-card" id="songCard" hidden><div class="song-title">🤫 Sirf Aapka Raaz</div><div id="songHost"><iframe class="song-embed" title="Sirf aapka raaz" src="https://open.spotify.com/embed/track/7pkQKhYd7YH1s4ocurkVKG?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="song-note">mushkil waqt mein, play dabaiye 🤍</div></div><button class="back-up" type="button" data-action="backToGifts" id="backToGifts" hidden>↑ wapas gifts par</button>`},
+<div class="song-card" id="songCard" hidden><div class="song-head"><div class="song-title">🤫 Sirf Aapka Raaz</div><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div><div class="song-sub">🎶 Idhar Chala Main Udhar Chala</div><div id="songHost"><iframe class="song-embed" title="Idhar Chala Main Udhar Chala" src="https://open.spotify.com/embed/track/6bYS8v4EUP71kJ872aO0mt?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="song-note">mushkil waqt mein, play dabaiye 🤍</div></div><button class="back-up" type="button" data-action="backToGifts" id="backToGifts" hidden>↑ wapas gifts par</button>`},
 {label:"Peaceful care corner",render:()=>`
 <div class="eyebrow">slow down, if you want 🌙</div><h2>Abhi bas ek chhota sa pause</h2><p>Aap chahein toh is soft circle ke saath aaram se saans lene ki rhythm follow kar sakti hain. Koi target nahi, koi perfect technique nahi — uncomfortable lage toh normal breathing par laut aayein.</p>
 <div class="breath-wrap"><div class="breath-orb" aria-hidden="true"><span>☁️</span></div><p><strong>Saans andar… aur dheere se bahar.</strong></p><p class="tiny">Circle sirf ek gentle visual hai. Apni natural pace par hi rahein.</p></div>
@@ -1099,46 +1118,45 @@ function setMoodFx(kind){
  moodtop.innerHTML=h;
  requestAnimationFrame(()=>{moodfx.classList.add('on','mood-'+kind);moodtop.classList.add('on');});
 }
-const SONG_ID='7pkQKhYd7YH1s4ocurkVKG';   /* Spotify track: used only as backup */
-const YT_IDS=['c4YI39LgRVQ','WfYDVTpxfHY','iv-VE7BbqO0','OFrdfsIuO5Q'];                 /* YouTube videos tried in order (if one can't be embedded, the next is used, then Spotify). Add or swap IDs here. */
-const SONG_START=20;                       /* seconds: skips the slow intro. Change this number to pick another start point. */
-function songFallback(host){host.classList.remove('yt');host.innerHTML='<iframe class="song-embed" title="Sirf aapka raaz" src="https://open.spotify.com/embed/track/'+SONG_ID+'?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';}
-function loadYouTubeApi(cb){
- if(window.YT&&window.YT.Player){cb(true);return;}
- (window.__ytCbs=window.__ytCbs||[]).push(cb);
- if(window.__ytLoading)return;window.__ytLoading=true;
- window.onYouTubeIframeAPIReady=function(){window.__ytCbs.splice(0).forEach(function(f){f(true);});};
- const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';sc.async=true;
- sc.onerror=function(){window.__ytLoading=false;window.__ytCbs.splice(0).forEach(function(f){f(false);});};
+const SONG_ID='6bYS8v4EUP71kJ872aO0mt';   /* Spotify track: Idhar Chala Main Udhar Chala */
+const SONG_START=43;                       /* seconds: gaana yahin se shuru hoga (Spotify login ho tab). Number badal kar start point badal sakte ho. */
+function songFallback(host){host.innerHTML='<iframe class="song-embed" title="Idhar Chala Main Udhar Chala" src="https://open.spotify.com/embed/track/'+SONG_ID+'?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';}
+function loadSpotifyApi(cb){
+ if(window.__spApi){cb(window.__spApi);return;}
+ (window.__spCbs=window.__spCbs||[]).push(cb);
+ if(window.__spLoading)return;window.__spLoading=true;
+ window.onSpotifyIframeApiReady=function(api){window.__spApi=api;window.__spCbs.splice(0).forEach(function(f){f(api);});};
+ const sc=document.createElement('script');sc.src='https://open.spotify.com/embed/iframe-api/v1';sc.async=true;
+ sc.onerror=function(){window.__spLoading=false;window.__spCbs.splice(0).forEach(function(f){f(null);});};
  document.head.appendChild(sc);
 }
 function showSong(){
  const card=document.getElementById('songCard');if(card)card.hidden=false;if(window.__kassuBg)window.__kassuBg.duck();
  const host=document.getElementById('songHost');if(!host||host.dataset.ready)return;host.dataset.ready='1';
- let settled=false,yi=0,player=null;
- const tm=setTimeout(function(){if(!settled){settled=true;songFallback(host);}},7000);
- loadYouTubeApi(function(ok){
+ let settled=false;
+ const tm=setTimeout(function(){if(!settled){settled=true;songFallback(host);}},6000);
+ loadSpotifyApi(function(api){
   if(settled||!host.isConnected)return;
-  if(!ok){settled=true;clearTimeout(tm);songFallback(host);return;}
-  host.classList.add('yt');host.innerHTML='<div id="songMount"></div>';
-  player=new YT.Player('songMount',{width:'100%',height:'100%',videoId:YT_IDS[0],
-   playerVars:{start:SONG_START,playsinline:1,rel:0,modestbranding:1},
-   events:{
-    onReady:function(){settled=true;clearTimeout(tm);},
-    onError:function(e){
-     settled=true;clearTimeout(tm);
-     try{console.warn('YouTube error',e&&e.data,'for',YT_IDS[yi]);}catch(_){}
-     yi++;
-     if(!host.isConnected)return;
-     if(yi<YT_IDS.length){try{player.cueVideoById({videoId:YT_IDS[yi],startSeconds:SONG_START});}catch(_){songFallback(host);}}
-     else songFallback(host);
-    }
-   }});
+  if(!api){settled=true;clearTimeout(tm);songFallback(host);return;}
+  host.innerHTML='<div id="songMount"></div>';
+  try{
+   api.createController(document.getElementById('songMount'),{uri:'spotify:track:'+SONG_ID,width:'100%',height:152},function(ctrl){
+    settled=true;clearTimeout(tm);window.__songCtrl=ctrl;
+    let seeked=false;
+    ctrl.addListener('playback_update',function(e){
+     const d=e&&e.data;if(!d||seeked||d.isPaused)return;
+     /* pehli baar play dabane par 43 sec par le jao (poora gaana tabhi chalta hai jab Spotify login ho) */
+     if(d.duration>(SONG_START+20)*1000){
+      seeked=true;
+      if(d.position<(SONG_START-3)*1000){try{ctrl.seek(SONG_START);}catch(_){}}
+     }else if(d.position>0){seeked=true;}
+    });
+   });
+  }catch(_){settled=true;clearTimeout(tm);songFallback(host);}
  });
 }
 function stopSong(){
- const a=document.getElementById('songAudio');
- if(a&&!a.paused)a.pause();
+ if(window.__songCtrl){try{window.__songCtrl.pause();}catch(_){}window.__songCtrl=null;}
  if(window.__kassuBg)window.__kassuBg.restore();
 }
 function render(){
