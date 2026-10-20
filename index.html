@@ -660,6 +660,47 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
     radial-gradient(ellipse 42% 7% at 50% 71%,rgba(24,8,92,0.45),rgba(24,8,92,0.225) 45%,rgba(24,8,92,0) 100%),
     radial-gradient(ellipse 58% 8% at 0% 83%,rgba(24,8,92,0.7),rgba(24,8,92,0.35) 45%,rgba(24,8,92,0) 100%),
     radial-gradient(ellipse 55% 7% at 100% 94%,rgba(24,8,92,0.62),rgba(24,8,92,0.31) 45%,rgba(24,8,92,0) 100%)}
+
+/* ==========================================================
+   CHAPTER 6 — "Ek aur pyaari baat": har tap par line ka colour ek baar
+   border + fill par aata hai aur fade ho jata hai; GLOW rehta hai.
+   Words dheere dheere appear hote hain (ch3/4 jaisa). --tc = r,g,b
+   ========================================================== */
+#randomLine{position:relative;isolation:isolate}
+#randomLine[data-rt="0"]{--tc:255,140,210}
+#randomLine[data-rt="1"]{--tc:112,196,255}
+#randomLine[data-rt="2"]{--tc:255,170,150}
+#randomLine[data-rt="3"]{--tc:190,150,255}
+#randomLine[data-rt="4"]{--tc:255,160,60}
+#randomLine[data-rt="5"]{--tc:116,232,180}
+#randomLine[data-rt="6"]{--tc:60,214,208}
+#randomLine[data-rt="7"]{--tc:255,214,90}
+#randomLine[data-rt="d"]{--tc:190,150,255}
+/* permanent: sirf glow */
+#randomLine[data-rt]{box-shadow:0 0 20px rgba(var(--tc),.50),inset 0 0 22px rgba(var(--tc),.16),inset 0 1px 0 rgba(255,255,255,.28) !important;transition:box-shadow .8s ease}
+/* temporary: colour border + fill, ek baar aata hai phir chala jata hai */
+#randomLine[data-rt]:not([data-rt="d"])::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;border-radius:inherit;
+  border:1.5px solid rgba(var(--tc),.95);
+  background:linear-gradient(135deg,rgba(var(--tc),.34),rgba(var(--tc),.16));
+  opacity:0;animation:rlFlash 2.4s ease-out both}
+@keyframes rlFlash{0%{opacity:0}18%{opacity:1}55%{opacity:1}100%{opacity:0}}
+#randomLine .wd{display:inline-block;position:relative;z-index:1;opacity:0;transform:translateY(6px);animation:wdIn .6s cubic-bezier(.22,1,.36,1) both}
+@media(prefers-reduced-motion:reduce){#randomLine .wd{opacity:1!important;transform:none!important;animation:none!important}#randomLine::before{display:none!important}}
+/* ==========================================================
+   LAST CHAPTER — letter ke baad ke 2 paragraphs (#letterFinal, #letterPromise)
+   Words dheere appear, colour border+fill par ek baar aata hai phir jata hai, GLOW rehta hai.
+   gold = "You deserve..." (special) | rose = "Main hoon..." (pyaar). --tc = r,g,b
+   ========================================================== */
+#letterFinal,#letterPromise{position:relative;isolation:isolate}
+#letterFinal{--tc:255,208,110}
+#letterPromise{--tc:255,140,210}
+#letterFinal[data-fx],#letterPromise[data-fx]{box-shadow:0 0 24px rgba(var(--tc),.55),inset 0 0 24px rgba(var(--tc),.18),inset 0 1px 0 rgba(255,255,255,.30) !important}
+#letterFinal[data-fx]::before,#letterPromise[data-fx]::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;border-radius:inherit;
+  border:1.5px solid rgba(var(--tc),.95);
+  background:linear-gradient(135deg,rgba(var(--tc),.34),rgba(var(--tc),.16));
+  opacity:0;animation:rlFlash 3s ease-out both}
+#letterFinal .wd,#letterPromise .wd{display:inline-block;position:relative;z-index:1;opacity:0;transform:translateY(6px);animation:wdIn .7s cubic-bezier(.22,1,.36,1) both}
+@media(prefers-reduced-motion:reduce){#letterFinal .wd,#letterPromise .wd{opacity:1!important;transform:none!important;animation:none!important}#letterFinal::before,#letterPromise::before{display:none!important}}
 </style>
 </head>
 <body>
@@ -741,7 +782,7 @@ const chapters = [
 <div class="soft-note">🌷 Paani ka ek sip, shoulders ko relax karna, ya kuch der aaram — inmein se ek chhoti cheez bhi kaafi hai. Rest earn karna nahi padta.</div>`},
 {label:"Cute smile corner",render:()=>`
 <div class="eyebrow">one tiny dose of cute 🧸</div><h2>Ek chhoti si baat sunengi, Kaashi?</h2><p>Yeh button har tap par ek naya, pyaara sa reminder laayega. Smile aaye toh lovely; na aaye toh bhi koi problem nahi. 💗</p>
-<div class="soft-note" id="randomLine" role="status">Aapki presence ki apni ek alag si value hai. ✨</div>
+<div class="soft-note" id="randomLine" data-rt="d" role="status">Aapki presence ki apni ek alag si value hai. ✨</div>
 <div class="actions"><button class="btn" data-action="random">Ek aur pyaari baat 🌸</button><button class="btn secondary" data-action="sparkle">Tiny sparkle ✨</button></div>`},
 {label:"Your thoughts",render:()=>`
 <div class="eyebrow">a private little page 📝</div><h2>Aapke thoughts ke liye jagah</h2><p>Agar mann ho, toh jo bhi dimag mein chal raha hai yahan likh sakti hain. Isse kisi ko dikhane ya perfect words mein likhne ki zaroorat nahi.</p>
@@ -819,16 +860,24 @@ function heartOfStars(){
 function revealEl(id){const el=document.getElementById(id);if(!el)return;el.hidden=false;el.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)el.scrollIntoView({behavior:'smooth',block:'center'});}
 function endingSequence(){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(reduce){['letterPromise','letterSign','letterWish','letterDM'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});return;}
+ if(reduce){fxPara('letterFinal');fxPara('letterPromise');['letterSign','letterWish','letterDM'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});return;}
  const at=(ms,fn)=>endTimers.push(setTimeout(()=>{if(document.getElementById('letterContent'))fn();},ms));
  at(300,()=>sprinkle(['✦','✧','💜','✨']));
- at(1200,()=>revealEl('letterPromise'));
+ at(2900,()=>{fxPara('letterPromise');const e=document.getElementById('letterPromise');if(e){e.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)e.scrollIntoView({behavior:'smooth',block:'center'});}});
  
  at(4500,heartOfStars);
  at(8400,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);});
  at(9000,()=>revealEl('letterWish'));
  at(10800,()=>revealEl('letterSign'));
  at(12400,()=>revealEl('letterDM'));
+}
+function fxPara(id){
+ const el=document.getElementById(id);if(!el)return;
+ el.hidden=false;
+ if(!el.dataset.t)el.dataset.t=el.textContent.trim();
+ el.removeAttribute('data-fx');void el.offsetWidth;
+ el.setAttribute('data-fx','1');
+ revealWords(el,el.dataset.t,true);
 }
 function finishLetter(){
  clearLetterTimer();
@@ -837,7 +886,7 @@ function finishLetter(){
  if(!holder||!finalLine)return;
  holder.innerHTML='';
  letterParagraphs.forEach((text,i)=>{const p=document.createElement('p');p.className='letter-paragraph';p.textContent=text;holder.appendChild(p);});
- finalLine.hidden=false;letterComplete=true;
+ fxPara('letterFinal');letterComplete=true;
  const skip=document.querySelector('[data-action="skipLetter"]');if(skip)skip.hidden=true;
  endingSequence();
 }
@@ -855,7 +904,7 @@ function startLetter(){
  function typeParagraph(){
   if(!document.getElementById('letterContent')){clearLetterTimer();return;}
   if(paragraphIndex>=letterParagraphs.length){
-   const finalLine=document.getElementById('letterFinal');if(finalLine)finalLine.hidden=false;
+   fxPara('letterFinal');
    letterComplete=true;if(skip)skip.hidden=true;endingSequence();return;
   }
   const p=document.createElement('p');p.className='letter-paragraph';holder.appendChild(p);
@@ -908,10 +957,10 @@ const moodfx=document.getElementById('moodfx'), moodtop=document.getElementById(
 function clearMoodFx(){[moodfx,moodtop].forEach(el=>{if(el){el.className=el.id==='moodtop'?'mood-fx mood-top':'mood-fx';el.innerHTML='';}});}
 
 /* ---- message touches (chapter 3 moods + chapter 4 gifts): word-by-word reveal, one glass shimmer, a small colour touch. No emoji. ---- */
-function revealWords(el,text){
+function revealWords(el,text,slow){
  el.textContent='';
  const words=String(text).split(/\s+/).filter(Boolean);
- const step=Math.min(.05,1.2/Math.max(words.length,1));
+ const step=slow?.1:Math.min(.05,1.2/Math.max(words.length,1));
  words.forEach((w,i)=>{
   if(i)el.appendChild(document.createTextNode(' '));
   const sp=document.createElement('span');
@@ -1059,7 +1108,7 @@ panel.addEventListener('click',e=>{
  if(b.dataset.action==='backToMoods'){const g=panel.querySelector('.mood-grid');if(g)glideTo(g,'start');return;}
  if(b.dataset.action==='openLetter'){startLetter();return;}
   if(b.dataset.action==='skipLetter'){finishLetter();return;}
-  if(b.dataset.action==='random'){let line=lines[Math.floor(Math.random()*lines.length)];const el=document.getElementById('randomLine');if(lines.length>1&&el.textContent===line)line=lines[(lines.indexOf(line)+1)%lines.length];el.textContent=line;el.animate?.([{opacity:.3,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{duration:220});}
+  if(b.dataset.action==='random'){let line=lines[Math.floor(Math.random()*lines.length)];const el=document.getElementById('randomLine');if(lines.length>1&&el.textContent===line)line=lines[(lines.indexOf(line)+1)%lines.length];el.removeAttribute('data-rt');void el.offsetWidth;el.dataset.rt=lines.indexOf(line);revealWords(el,line);}
  if(b.dataset.action==='sparkle')sprinkle(['💗','✨','🌸','♡']);
  if(b.dataset.action==='clearThoughts'){document.getElementById('thoughts').value='';const m=document.getElementById('thoughtMessage');m.textContent='Text clear ho gaya. 🌷';m.classList.add('show');}
  if(b.dataset.action==='saveNotice'){const m=document.getElementById('thoughtMessage');m.textContent='Yeh text isi page par tab tak rahega jab tak aap page refresh ya close nahi karti. Kahin send ya permanently save nahi hota. 🤍';m.classList.add('show');}
