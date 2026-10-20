@@ -644,19 +644,25 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
 .message[data-tone="g6"]{background:linear-gradient(135deg,rgba(var(--tc),.46),rgba(var(--tc),.28)) !important}
 
 /* ==========================================================
-   BACKGROUND ONLY — deep indigo shade on the left + right edges and a light touch in the centre
-   Same dark indigo-blue as the top of the sky (about rgb 38,14,116).
-   Sits on top of the sky photo but UNDER the stars, petals, hearts and the card, so nothing else changes.
-   Tweak: the .xx alpha numbers below (edges = .66 / .38 / .16, centre = .20).
+   BACKGROUND ONLY — a few soft patches of the same deep indigo-blue that is at the top of the sky
+   (about rgb 38,14,116): some on the right, some on the left, one light one in the centre,
+   with clear gaps between them.  The top is left alone (it is already dark).
+   Sits on the sky photo but UNDER the stars, petals, hearts and the card, so nothing else changes.
+   Each line = one patch:  ellipse WIDTH HEIGHT at X Y  (all % of the screen).
+   Make a patch stronger/softer with the first alpha number, bigger/smaller with WIDTH/HEIGHT,
+   move it with X Y.  Delete a line to remove that patch.
    ========================================================== */
-.edge-shade{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
+.sky-shade{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 75% 60% at 50% 52%,rgba(38,14,116,.20),rgba(38,14,116,0) 100%),
-    linear-gradient(90deg,rgba(38,14,116,.66) 0%,rgba(38,14,116,.38) 8%,rgba(38,14,116,.16) 18%,rgba(38,14,116,0) 32%,rgba(38,14,116,0) 68%,rgba(38,14,116,.16) 82%,rgba(38,14,116,.38) 92%,rgba(38,14,116,.66) 100%)}
+    radial-gradient(ellipse 34% 8% at 100% 31%,rgba(38,14,116,.60),rgba(38,14,116,.28) 48%,rgba(38,14,116,0) 100%),
+    radial-gradient(ellipse 36% 8% at 0% 47%,rgba(38,14,116,.56),rgba(38,14,116,.26) 48%,rgba(38,14,116,0) 100%),
+    radial-gradient(ellipse 30% 6% at 50% 61%,rgba(38,14,116,.28),rgba(38,14,116,.12) 50%,rgba(38,14,116,0) 100%),
+    radial-gradient(ellipse 32% 7% at 100% 74%,rgba(38,14,116,.58),rgba(38,14,116,.27) 48%,rgba(38,14,116,0) 100%),
+    radial-gradient(ellipse 34% 6% at 0% 89%,rgba(38,14,116,.52),rgba(38,14,116,.24) 48%,rgba(38,14,116,0) 100%)}
 </style>
 </head>
 <body>
-<div class="edge-shade" aria-hidden="true"></div>
+<div class="sky-shade" aria-hidden="true"></div>
 <div class="floaties" aria-hidden="true"><span>♡</span><span>✦</span><span>🌷</span><span>♡</span><span>✧</span></div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 <div class="mood-fx" id="moodfx" aria-hidden="true"></div>
