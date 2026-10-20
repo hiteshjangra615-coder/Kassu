@@ -871,8 +871,8 @@ body.opened .chap-bg{opacity:1}
   background:
     radial-gradient(circle at 100% 0%,rgba(255,214,140,.42) 0,rgba(255,170,200,.18) 34%,rgba(255,170,200,0) 64%),
     linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015)) !important;
-  border:1px solid rgba(255,208,160,.92) !important;
-  box-shadow:0 0 20px rgba(255,190,140,.38),inset 0 0 22px rgba(255,200,170,.16),inset 0 1px 0 rgba(255,255,255,.42) !important}
+  border:1px solid rgba(255,208,160,.55) !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 22px rgba(255,190,140,.42),0 0 44px rgba(255,150,220,.12),inset 0 0 22px rgba(255,200,170,.16),inset 0 1px 0 rgba(255,255,255,.42) !important}
 /* breathing moon glow in the top-right corner */
 .moon-note::before{content:"";position:absolute;top:-46px;right:-46px;width:130px;height:130px;border-radius:50%;pointer-events:none;z-index:0;
   background:radial-gradient(circle,rgba(255,228,160,.62) 0,rgba(255,176,196,.26) 40%,rgba(255,176,196,0) 70%);
@@ -914,19 +914,40 @@ body:not(.opened) .moon-note .mn-k2{animation-play-state:paused!important}
 /* border light: one runner laps the box, a second comes back the other way
    to the first corner, then two meet at one point (plays once, ~4 s) */
 .moon-note .mn-run{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:hidden}
-.moon-note .mn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:20 180;opacity:0;animation-fill-mode:both;animation-timing-function:ease-in-out}
-.moon-note .r1{stroke:#7ff6ff;filter:drop-shadow(0 0 5px #7ff6ff) drop-shadow(0 0 10px rgba(127,246,255,.8));animation:mnR1 1.5s 4.3s}
-.moon-note .r2{stroke:#ff86d6;filter:drop-shadow(0 0 5px #ff86d6) drop-shadow(0 0 10px rgba(255,134,214,.8));animation:mnR2 1.1s 5.9s}
-.moon-note .r3{stroke:#ffe08a;filter:drop-shadow(0 0 5px #ffd25e) drop-shadow(0 0 10px rgba(255,210,94,.8));animation:mnR3 .8s 7.1s}
-.moon-note .r4{stroke:#7ff6ff;filter:drop-shadow(0 0 5px #7ff6ff) drop-shadow(0 0 10px rgba(127,246,255,.8));animation:mnR4 .8s 7.1s}
-.moon-note .rf{stroke:#fff3c9;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #ffd98a);animation:mnFlash .6s 7.75s}
+.moon-note .mn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:18 182;opacity:0;stroke:currentColor;animation-timing-function:ease-in-out}
+/* outer ring: warm gold -> pink -> aqua, always visible, drifts gently */
+.moon-note .mn-run .rg{stroke:url(#mnRingGrad);stroke-width:2.6;stroke-dasharray:none;opacity:.92;
+  filter:hue-rotate(-12deg) drop-shadow(0 0 5px rgba(255,200,150,.7));animation:mnRingHue 9s ease-in-out infinite alternate}
+/* two runners (clockwise + anti-clockwise) meet at the opposite corner, then go back; loops forever */
+.moon-note .mn-run .r1{color:#7ff6ff;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor);animation:mnLoopA 7.6s ease-in-out 4.3s infinite}
+.moon-note .mn-run .r2{color:#ff86d6;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor);animation:mnLoopB 7.6s ease-in-out 4.3s infinite}
+.moon-note .mn-run .rf{color:#fff3c9;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #ffd98a);animation:snPulse 7.6s ease-in-out 4.3s infinite}
+@keyframes mnLoopA{
+  0%,5%{stroke-dashoffset:0;opacity:0;color:#ffe08a}
+  9%{opacity:1;color:#7ff6ff}
+  45%{stroke-dashoffset:-32;opacity:1;color:#7ff6ff}
+  50%{stroke-dashoffset:-32;opacity:.35;color:#ffe08a}
+  55%{stroke-dashoffset:-32;opacity:1;color:#ffe08a}
+  91%{opacity:1;color:#ffe08a}
+  95%,100%{stroke-dashoffset:0;opacity:0;color:#ffe08a}
+}
+@keyframes mnLoopB{
+  0%,5%{stroke-dashoffset:-82;opacity:0;color:#c9a0ff}
+  9%{opacity:1;color:#ff86d6}
+  45%{stroke-dashoffset:-50;opacity:1;color:#ff86d6}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#c9a0ff}
+  55%{stroke-dashoffset:-50;opacity:1;color:#c9a0ff}
+  91%{opacity:1;color:#c9a0ff}
+  95%,100%{stroke-dashoffset:-82;opacity:0;color:#c9a0ff}
+}
+@keyframes mnRingHue{from{filter:hue-rotate(-12deg) drop-shadow(0 0 4px rgba(255,200,150,.55))}to{filter:hue-rotate(28deg) drop-shadow(0 0 9px rgba(255,155,216,.85))}}
 @keyframes mnR1{0%{stroke-dashoffset:20;opacity:0}6%{opacity:1}90%{opacity:1}100%{stroke-dashoffset:-85;opacity:0}}
 @keyframes mnR2{0%{stroke-dashoffset:-50;opacity:0}8%{opacity:1}90%{opacity:1}100%{stroke-dashoffset:5;opacity:0}}
 @keyframes mnR3{0%{stroke-dashoffset:20;opacity:0}10%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-25;opacity:0}}
 @keyframes mnR4{0%{stroke-dashoffset:-50;opacity:0}10%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-25;opacity:0}}
 @keyframes mnFlash{0%{opacity:0}30%{opacity:.85}100%{opacity:0}}
 body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
-@media(prefers-reduced-motion:reduce){.moon-note .mn-run{display:none}}
+@media(prefers-reduced-motion:reduce){.moon-note .mn-run .r1,.moon-note .mn-run .r2,.moon-note .mn-run .rf{display:none}.moon-note .mn-run .rg{animation:none!important}}
 
 /* ==========================================================
    CHAPTER 2 — "ek aakhri baat": the 🌱 line gets its own glowing box
@@ -939,8 +960,8 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
   background:
     radial-gradient(circle at 0% 0%,rgba(236,190,255,.40) 0,rgba(255,170,220,.16) 34%,rgba(255,170,220,0) 64%),
     linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015)) !important;
-  border:1px solid rgba(236,196,255,.92) !important;
-  box-shadow:0 0 20px rgba(214,150,255,.40),inset 0 0 22px rgba(236,190,255,.16),inset 0 1px 0 rgba(255,255,255,.42) !important}
+  border:1px solid rgba(96,226,146,.95) !important;
+  box-shadow:0 0 22px rgba(96,226,146,.55),inset 0 0 24px rgba(96,226,146,.24),inset 0 1px 0 rgba(255,255,255,.30) !important}
 .star-note::before{content:"";position:absolute;top:-46px;left:-46px;width:130px;height:130px;border-radius:50%;pointer-events:none;z-index:0;
   background:radial-gradient(circle,rgba(246,214,255,.62) 0,rgba(226,170,255,.26) 40%,rgba(226,170,255,0) 70%);opacity:.5}
 .star-note::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:34%;pointer-events:none;z-index:1;
@@ -950,13 +971,14 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 .star-note .sn-star{position:absolute;z-index:1;width:var(--s);height:var(--s);pointer-events:none;background:#f3e4ff;opacity:.15;
   clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);filter:drop-shadow(0 0 4px rgba(190,150,255,.95))}
 .star-note .sn-run{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:hidden}
-.star-note .sn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:20 180;opacity:0;animation-fill-mode:both;animation-timing-function:ease-in-out}
-.star-note .sn-run .rf{stroke-dasharray:none;stroke-width:2.6}
-.star-note .r1{stroke:#7dffd0;filter:drop-shadow(0 0 5px #7dffd0) drop-shadow(0 0 10px rgba(125,255,208,.8))}
-.star-note .r2{stroke:#c9a0ff;filter:drop-shadow(0 0 5px #c9a0ff) drop-shadow(0 0 10px rgba(201,160,255,.8))}
-.star-note .r3{stroke:#ff9bd8;filter:drop-shadow(0 0 5px #ff9bd8) drop-shadow(0 0 10px rgba(255,155,216,.8))}
-.star-note .r4{stroke:#7dffd0;filter:drop-shadow(0 0 5px #7dffd0) drop-shadow(0 0 10px rgba(125,255,208,.8))}
-.star-note .rf{stroke:#f6e6ff;filter:drop-shadow(0 0 8px #e4b8ff)}
+.star-note .sn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:18 182;opacity:0;stroke:currentColor;animation-timing-function:ease-in-out}
+/* outer ring: green (same as the "Purple & green" gift in chapter 4) */
+.star-note .sn-run .rg{stroke:url(#snRingGrad);stroke-width:2.6;stroke-dasharray:none;opacity:.92;
+  filter:drop-shadow(0 0 5px rgba(96,226,146,.8))}
+/* two runners: one clockwise, one anti-clockwise, they meet at the opposite corner */
+.star-note .sn-run .r1{color:#7ff6ff;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
+.star-note .sn-run .r2{color:#ffd98a;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
+.star-note .sn-run .rf{color:#f6e6ff;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #e4b8ff)}
 /* "ye sirf aapki achhai hai." — line drawn lavender -> pink -> mint */
 .star-note .sn-k2{padding-bottom:2px;background:linear-gradient(90deg,#c9a0ff 0%,#ff9bd8 50%,#7dffd0 100%) no-repeat 0 100%/0% 2px}
 /* everything below starts only after the box has been seen (.go) */
@@ -964,17 +986,36 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 .star-note.go::after{animation:mnBeam 7s ease-in-out 4.6s infinite}
 .star-note.go .sn-star{animation:mnTwinkle 3.6s ease-in-out infinite;animation-delay:var(--d)}
 .star-note.go .sn-emoji{display:inline-block;animation:snEmoji 4.8s ease-in-out 1s infinite}
-.star-note.go .r1{animation:mnR1 1.5s .5s}
-.star-note.go .r2{animation:mnR2 1.1s 2.1s}
-.star-note.go .r3{animation:mnR3 .8s 3.3s}
-.star-note.go .r4{animation:mnR4 .8s 3.3s}
-.star-note.go .rf{animation:mnFlash .6s 3.95s}
+/* border light never stops: corner -> opposite corner, then back, new colours each way (7.6 s loop) */
+.star-note.go .sn-run .r1{animation:snRunA 7.6s ease-in-out infinite}
+.star-note.go .sn-run .r2{animation:snRunB 7.6s ease-in-out infinite}
+.star-note.go .sn-run .rf{animation:snPulse 7.6s ease-in-out infinite}
+@keyframes snRunA{
+  0%,5%{stroke-dashoffset:0;opacity:0;color:#ff86d6}
+  9%{opacity:1;color:#7ff6ff}
+  45%{stroke-dashoffset:-32;opacity:1;color:#7ff6ff}
+  50%{stroke-dashoffset:-32;opacity:.35;color:#ff86d6}
+  55%{stroke-dashoffset:-32;opacity:1;color:#ff86d6}
+  91%{opacity:1;color:#ff86d6}
+  95%,100%{stroke-dashoffset:0;opacity:0;color:#ff86d6}
+}
+@keyframes snRunB{
+  0%,5%{stroke-dashoffset:-82;opacity:0;color:#7dffd0}
+  9%{opacity:1;color:#ffd98a}
+  45%{stroke-dashoffset:-50;opacity:1;color:#ffd98a}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#7dffd0}
+  55%{stroke-dashoffset:-50;opacity:1;color:#7dffd0}
+  91%{opacity:1;color:#7dffd0}
+  95%,100%{stroke-dashoffset:-82;opacity:0;color:#7dffd0}
+}
+@keyframes snPulse{0%{opacity:.5}8%{opacity:0}46%{opacity:0}50%{opacity:.55}58%{opacity:0}92%{opacity:0}100%{opacity:.5}}
+@keyframes snRingHue{from{filter:hue-rotate(-18deg) drop-shadow(0 0 4px rgba(201,160,255,.6))}to{filter:hue-rotate(32deg) drop-shadow(0 0 9px rgba(255,155,216,.85))}}
 .star-note.go .sn-k1{animation:mnShine 6s ease-in-out 4.4s infinite}
 .star-note.go .sn-k2{animation:mnDraw 1.9s cubic-bezier(.22,1,.36,1) 3.4s forwards}
 @keyframes snEmoji{0%,100%{filter:drop-shadow(0 0 3px rgba(125,255,208,.5))}50%{filter:drop-shadow(0 0 9px rgba(160,255,225,1))}}
 @media(prefers-reduced-motion:reduce){
   .star-note::before,.star-note::after,.star-note .sn-star,.star-note .sn-emoji,.star-note .sn-k1{animation:none!important}
-  .star-note::after,.star-note .sn-run{display:none}.star-note .sn-star{opacity:.7}
+  .star-note::after,.star-note .sn-run .r1,.star-note .sn-run .r2,.star-note .sn-run .rf{display:none}.star-note .sn-star{opacity:.7}.star-note .sn-run .rg{animation:none!important}
   .star-note .sn-k2{animation:none!important;background-size:100% 2px}}
 </style>
 </head>
@@ -1018,7 +1059,7 @@ const chapters = [
 <div class="hero-lines">
 <p class="hl" style="--i:0">Yeh koi aisi jagah nahi jahan aapko khush dikhna ho, sab explain karna ho, ya har baat ka answer pata hona chahiye.</p>
 <p class="hl" style="--i:1">Bas kuch chhote messages, cute surprises aur thodi si narmi — jab aapka mann ho.</p>
-<div class="soft-note hl moon-note" style="--i:2"><i class="mn-star" style="top:10px;right:14px;--s:9px;--d:0s" aria-hidden="true"></i><i class="mn-star" style="top:34px;right:38px;--s:6px;--d:-1.3s" aria-hidden="true"></i><i class="mn-star" style="bottom:12px;right:20px;--s:7px;--d:-2.2s" aria-hidden="true"></i><svg class="mn-run" aria-hidden="true" focusable="false"><rect class="r1" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r2" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r3" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r4" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="rf" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/></svg><span class="mn-text">Aap jaisa mehsoos kar rahi hain, <span class="mn-k1">woh matter karta hai.</span> <span class="mn-k2">Aapko abhi kuch prove karne ki zaroorat nahi.</span> <span class="mn-moon">🌙</span></span></div>
+<div class="soft-note hl moon-note" style="--i:2"><i class="mn-star" style="top:10px;right:14px;--s:9px;--d:0s" aria-hidden="true"></i><i class="mn-star" style="top:34px;right:38px;--s:6px;--d:-1.3s" aria-hidden="true"></i><i class="mn-star" style="bottom:12px;right:20px;--s:7px;--d:-2.2s" aria-hidden="true"></i><svg class="mn-run" aria-hidden="true" focusable="false"><defs><linearGradient id="mnRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd98a"/><stop offset=".5" stop-color="#ff9bd8"/><stop offset="1" stop-color="#8fe9ff"/></linearGradient></defs><rect class="rg" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r1" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r2" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="rf" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/></svg><span class="mn-text">Aap jaisa mehsoos kar rahi hain, <span class="mn-k1">woh matter karta hai.</span> <span class="mn-k2">Aapko abhi kuch prove karne ki zaroorat nahi.</span> <span class="mn-moon">🌙</span></span></div>
 </div>
 <div class="actions"><button class="btn" data-action="sparkle">A little sparkle ✨</button></div>
 <div class="hero-hint">jab ready ho, <b>Next →</b> dabaiye</div>`},
@@ -1029,7 +1070,7 @@ const chapters = [
 <div class="qual" style="--i:1"><span>🫶</span><div>Aap meri bhi care karti ho, mujhse baatein karti ho, aur mujhe achha lagta hai. Ye bohot badi baat hai.</div></div>
 <div class="qual" style="--i:2"><span>🎶</span><div>Aapse baat karna achha lagta hai. Aapki awaaz bohot pyari hai, sunne se alag hi sukoon milta hai. Aapse baat karke mujhe achha lagta hai.</div></div>
 </div>
-<div class="note-pager" id="notePager"><div class="np-stage" aria-live="polite"><div class="soft-note np-page on" data-p="0">Aapne sabke liye sab kuch kiya, ab aapki baari hai. Aap bhi khushiyan, care aur apnapan deserve karti ho. Ab thoda apne upar dhyan dena aur bas khush rehna. 💜</div><div class="soft-note np-page" data-p="1" aria-hidden="true">Ab kaun kya kehta hai, uski itni fikr mat karna. Bas apne mann ki karna. Aur agar kabhi kuch achha na lage ya pareshaan ho jao, toh mujhe zaroor batana. Main hoon aapke liye. 🤍</div></div><div class="np-nav"><button type="button" class="np-btn" data-np="prev" aria-label="Pehli baat" disabled>←</button><span class="np-dots" aria-hidden="true"><i class="on"></i><i></i></span><button type="button" class="np-btn np-next" data-np="next" aria-label="Agli baat">agla →</button></div></div><div class="eyebrow lw-label">ek aakhri baat 💜</div><div class="qual star-note" style="--i:5"><i class="sn-star" style="top:9px;right:12px;--s:9px;--d:0s" aria-hidden="true"></i><i class="sn-star" style="top:30px;right:34px;--s:6px;--d:-1.4s" aria-hidden="true"></i><i class="sn-star" style="bottom:10px;right:18px;--s:7px;--d:-2.3s" aria-hidden="true"></i><svg class="sn-run" aria-hidden="true" focusable="false"><rect class="r1" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r2" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r3" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r4" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="rf" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/></svg><span class="sn-emoji">🌱</span><div class="sn-text">Bachpan se abhi tak itna kuch jhelne ke baad bhi aap sabke liye sab kuch karti ho, itna sochti ho. <span class="sn-k1">Ye kamzori ya galti nahi hai,</span> <span class="sn-k2">ye sirf aapki achhai hai.</span></div></div>`},
+<div class="note-pager" id="notePager"><div class="np-stage" aria-live="polite"><div class="soft-note np-page on" data-p="0">Aapne sabke liye sab kuch kiya, ab aapki baari hai. Aap bhi khushiyan, care aur apnapan deserve karti ho. Ab thoda apne upar dhyan dena aur bas khush rehna. 💜</div><div class="soft-note np-page" data-p="1" aria-hidden="true">Ab kaun kya kehta hai, uski itni fikr mat karna. Bas apne mann ki karna. Aur agar kabhi kuch achha na lage ya pareshaan ho jao, toh mujhe zaroor batana. Main hoon aapke liye. 🤍</div></div><div class="np-nav"><button type="button" class="np-btn" data-np="prev" aria-label="Pehli baat" disabled>←</button><span class="np-dots" aria-hidden="true"><i class="on"></i><i></i></span><button type="button" class="np-btn np-next" data-np="next" aria-label="Agli baat">agla →</button></div></div><div class="eyebrow lw-label">ek aakhri baat 💜</div><div class="qual star-note" style="--i:5"><i class="sn-star" style="top:9px;right:12px;--s:9px;--d:0s" aria-hidden="true"></i><i class="sn-star" style="top:30px;right:34px;--s:6px;--d:-1.4s" aria-hidden="true"></i><i class="sn-star" style="bottom:10px;right:18px;--s:7px;--d:-2.3s" aria-hidden="true"></i><svg class="sn-run" aria-hidden="true" focusable="false"><defs><linearGradient id="snRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60e292"/><stop offset=".5" stop-color="#7dffb0"/><stop offset="1" stop-color="#60e292"/></linearGradient></defs><rect class="rg" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r1" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="r2" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/><rect class="rf" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/></svg><span class="sn-emoji">🌱</span><div class="sn-text">Bachpan se abhi tak itna kuch jhelne ke baad bhi aap sabke liye sab kuch karti ho, itna sochti ho. <span class="sn-k1">Ye kamzori ya galti nahi hai,</span> <span class="sn-k2">ye sirf aapki achhai hai.</span></div></div>`},
 {label:"Mood check-in",render:()=>`
 <div class="eyebrow">what kind of moment is it?</div><h2>Kaashi, abhi dil kaisa feel kar raha hai? 🫂</h2><p>Koi right ya wrong answer nahi. Jo option thoda sa bhi aapke kareeb lage, us par tap kar sakti hain.</p>
 <div class="mood-grid">
