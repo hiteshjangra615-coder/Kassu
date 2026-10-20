@@ -9,13 +9,16 @@ Nothing was removed or changed anywhere else: fonts, layout, text, buttons, navi
                Soft day -> golden yellow | Care note -> pink | Cute cats -> lime | Sirf Aapka Raaz -> sky blue
    To change a colour: edit the r,g,b numbers in the "--tc" lines in the CSS block "VISIBLE MESSAGE BOX COLOURS".
 
-2) BACKGROUND DARK PATCHES (new)
-   A few soft patches of the same deep indigo-blue that is at the top of the sky (about rgb 38,14,116):
-   right (upper-middle), left (middle), a light one in the centre, right (lower), left (bottom) - with gaps between them.
+2) BACKGROUND DARK PATCHES (new, v4 - stronger so they really show on a phone)
+   A few soft patches of deep indigo-navy (rgb 24,8,92), with clear gaps of lighter sky between them:
+   left (middle) | right (middle) | a light one in the centre | left (lower) | right (bottom).
    The top is untouched (already dark). No continuous border band.
    They sit on the sky photo but UNDER the stars, petals, hearts and the card.
    Added: one CSS block "BACKGROUND ONLY" at the end of <style>, and one line <div class="sky-shade"></div> right after <body>.
    Each "radial-gradient(ellipse WIDTH HEIGHT at X Y, ...)" line is one patch (all in % of the screen):
-   first alpha number = strength, WIDTH/HEIGHT = size, X Y = position. Delete a line to remove that patch.
+   first alpha number = strength (higher = darker), WIDTH/HEIGHT = size, X Y = position. Delete a line to remove that patch.
+
+IF IT LOOKS UNCHANGED AFTER UPLOADING: GitHub Pages / the phone browser can keep showing the old file for a few minutes.
+Open the site with ?v=4 added at the end of the link, or clear this site's data in Chrome, then check again.
 
 Replace the repository index.html with this index.html. Keep purple-sky.jpg and music.mp3 in the repository root.
