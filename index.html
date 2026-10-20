@@ -841,6 +841,21 @@ body.opened .chap-bg{opacity:1}
 @keyframes rlTwinkle{0%,100%{transform:scale(.55) rotate(0deg);opacity:.5}50%{transform:scale(1.1) rotate(45deg);opacity:1}}
 @keyframes rlIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){#randomLine[data-rt="d"],#randomLine[data-rt="d"]::before,#randomLine .rl-star{animation:none!important}#randomLine[data-rt="d"]::after{animation:none!important;opacity:.8}}
+
+/* ===== CHAPTER 2: do notes ek hi dabbe me (1/2, 2/2) — scroll kam ===== */
+.note-pager{margin:8px 0 18px}
+.np-stage{display:grid}
+.np-stage .np-page{grid-area:1/1;margin:0 !important;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease,visibility 0s linear .4s}
+.np-stage .np-page.on{opacity:1;visibility:visible;transform:none;transition:opacity .4s ease,transform .4s ease,visibility 0s}
+.np-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:12px}
+.np-btn{min-width:46px;height:40px;padding:0 16px;border-radius:999px;font:inherit;font-weight:700;font-size:14px;color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;
+ border:1px solid rgba(218,194,255,.78);background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(125,95,225,.34));box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 0 14px rgba(150,110,255,.26)}
+.np-btn.np-next{background:linear-gradient(100deg,#f777b5 0%,#c36cf0 58%,#a98af8 100%);border-color:rgba(255,225,250,.5)}
+.np-btn:disabled{opacity:.35;cursor:default;box-shadow:none}
+.np-dots{display:inline-flex;gap:7px}
+.np-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:all .3s}
+.np-dots i.on{width:22px;border-radius:6px;background:linear-gradient(90deg,#ff9ee0,#b794ff);box-shadow:0 0 10px rgba(255,150,225,.8)}
+@media(prefers-reduced-motion:reduce){.np-stage .np-page,.np-stage .np-page.on{transition:none}}
 </style>
 </head>
 <body>
@@ -893,10 +908,9 @@ const chapters = [
 <div class="qual" style="--i:0"><span>💗</span><div>Aap dil ki bohot zyada achhi ho. Sabka sochti ho, sabki fikr karti ho.</div></div>
 <div class="qual" style="--i:1"><span>🫶</span><div>Aap meri bhi care karti ho, mujhse baatein karti ho, aur mujhe achha lagta hai. Ye bohot badi baat hai.</div></div>
 <div class="qual" style="--i:2"><span>🎶</span><div>Aapse baat karna achha lagta hai. Aapki awaaz bohot pyari hai, sunne se alag hi sukoon milta hai. Aapse baat karke mujhe achha lagta hai.</div></div>
-<div class="qual" style="--i:3"><span>🌱</span><div>Bachpan se abhi tak itna kuch jhelne aur sahne ke baad bhi aap sabke liye sab kuch karti ho, itna sochti ho. Ye bohot badi baat hai. Ye koi kamzori ya galti nahi hai, ye sirf aapki achhai hai.</div></div>
+<div class="qual" style="--i:3"><span>🌱</span><div>Bachpan se abhi tak itna kuch jhelne ke baad bhi aap sabke liye sab kuch karti ho, itna sochti ho. Ye kamzori ya galti nahi hai, ye sirf aapki achhai hai.</div></div>
 </div>
-<div class="soft-note">Aapne sabke liye sab kuch kiya, ab aapki baari hai. Aap bhi khushiyan deserve karti ho, care deserve karti ho, aapko bhi apnapan milna chahiye. Toh ab aap apne upar dhyan dena aur bas khush rehna. Ab thodi der kisi ke baare me kuch mat sochna. 💜</div>
-<div class="soft-note">Aur ab kaun kya kehta hai, uski itni fikr mat karna. Bas apne mann ki karna, wahi jo aapko achha lage. Aur agar kabhi kuch bhi achha na lage, ya aap pareshaan ho jao, toh mujhe zaroor batana. Main hoon aapke liye. 🤍</div>`},
+<div class="note-pager" id="notePager"><div class="np-stage" aria-live="polite"><div class="soft-note np-page on" data-p="0">Aapne sabke liye sab kuch kiya, ab aapki baari hai. Aap bhi khushiyan, care aur apnapan deserve karti ho. Ab thoda apne upar dhyan dena aur bas khush rehna. 💜</div><div class="soft-note np-page" data-p="1" aria-hidden="true">Ab kaun kya kehta hai, uski itni fikr mat karna. Bas apne mann ki karna. Aur agar kabhi kuch achha na lage ya pareshaan ho jao, toh mujhe zaroor batana. Main hoon aapke liye. 🤍</div></div><div class="np-nav"><button type="button" class="np-btn" data-np="prev" aria-label="Pehli baat" disabled>←</button><span class="np-dots" aria-hidden="true"><i class="on"></i><i></i></span><button type="button" class="np-btn np-next" data-np="next" aria-label="Agli baat">agla →</button></div></div>`},
 {label:"Mood check-in",render:()=>`
 <div class="eyebrow">what kind of moment is it?</div><h2>Kaashi, abhi dil kaisa feel kar raha hai? 🫂</h2><p>Koi right ya wrong answer nahi. Jo option thoda sa bhi aapke kareeb lage, us par tap kar sakti hain.</p>
 <div class="mood-grid">
@@ -1518,6 +1532,24 @@ render();playTurn('next');
    else m.addedNodes.forEach(function(n){push(n);});
   });
  }).observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+</script>
+
+<script>
+/* chapter 2 ka 1/2 dabba: agla / pichla button */
+(function(){
+ document.addEventListener('click',function(e){
+  var b=e.target&&e.target.closest?e.target.closest('[data-np]'):null;if(!b||b.disabled)return;
+  var pg=b.closest('.note-pager');if(!pg)return;
+  var pages=pg.querySelectorAll('.np-page'),cur=0,i;
+  for(i=0;i<pages.length;i++){if(pages[i].classList.contains('on'))cur=i;}
+  var nx=b.getAttribute('data-np')==='next'?Math.min(cur+1,pages.length-1):Math.max(cur-1,0);
+  if(nx===cur)return;
+  for(i=0;i<pages.length;i++){pages[i].classList.toggle('on',i===nx);pages[i].setAttribute('aria-hidden',i===nx?'false':'true');}
+  var dots=pg.querySelectorAll('.np-dots i');for(i=0;i<dots.length;i++){dots[i].classList.toggle('on',i===nx);}
+  pg.querySelector('[data-np="prev"]').disabled=(nx===0);
+  pg.querySelector('[data-np="next"]').disabled=(nx===pages.length-1);
+ });
 })();
 </script>
 </body>
