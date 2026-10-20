@@ -610,6 +610,38 @@ radial-gradient(circle,#fff 0 1.6px,rgba(255,205,245,.55) 3px,rgba(210,150,255,.
 body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;left:0;right:0;bottom:0}
 @supports (min-height:100dvh){.shell{min-height:100dvh}}
 .panel,.btn,.counter,.soft-note,.message,.choice,.gift{-webkit-tap-highlight-color:transparent}
+
+/* ==========================================================
+   VISIBLE MESSAGE BOX COLOURS — chapter 3 (moods) + chapter 4 (gifts)
+   Every mood / gift gets its own clearly visible tinted box
+   (fill + border + glow), picked to stand out on the purple sky.
+   The three pink ones (happy, g0 Kind words, g5 Care note) use the
+   exact same recipe, just in pink; their old pulse / ring touches still play.
+   --tc = r,g,b of that tone.  Keep this block LAST in <style>.
+   ========================================================== */
+.message[data-tone="happy"]{--tc:255,140,210}  /* pink */
+.message[data-tone="g0"]{--tc:255,140,210}     /* pink */
+.message[data-tone="g5"]{--tc:255,140,210}     /* pink */
+.message[data-tone="heavy"]{--tc:64,196,255}   /* aqua blue  — pops against the blue rain background */
+.message[data-tone="tired"]{--tc:255,172,84}   /* warm amber */
+.message[data-tone="alone"]{--tc:116,232,180}  /* moonlit mint */
+.message[data-tone="g1"]{--tc:255,160,60}      /* biryani saffron */
+.message[data-tone="g2"]{--tc:96,226,146}      /* green (+ violet touch below) */
+.message[data-tone="g3"]{--tc:60,214,208}      /* open-air teal */
+.message[data-tone="g4"]{--tc:255,214,90}      /* soft golden yellow (glow-style, so it stays clean on purple) */
+.message[data-tone="g6"]{--tc:170,238,70}      /* playful lime */
+.message[data-tone="g7"]{--tc:112,196,255}     /* secret sky blue */
+.message[data-tone="happy"],.message[data-tone="g0"],.message[data-tone="g5"],
+.message[data-tone="heavy"],.message[data-tone="tired"],.message[data-tone="alone"],
+.message[data-tone="g1"],.message[data-tone="g2"],.message[data-tone="g3"],
+.message[data-tone="g4"],.message[data-tone="g6"],.message[data-tone="g7"]{
+  background:linear-gradient(135deg,rgba(var(--tc),.40),rgba(var(--tc),.22)) !important;
+  border-color:rgba(var(--tc),.95) !important;
+  box-shadow:0 0 22px rgba(var(--tc),.55),inset 0 0 24px rgba(var(--tc),.24),inset 0 1px 0 rgba(255,255,255,.30) !important}
+.message[data-tone="g2"]{background:linear-gradient(120deg,rgba(168,120,255,.38),rgba(var(--tc),.46)) !important}
+/* yellow turns muddy if it fills the whole box on purple, so g4 glows from the edges instead */
+.message[data-tone="g4"]{background:linear-gradient(135deg,rgba(var(--tc),.24),rgba(var(--tc),.10)) !important;box-shadow:0 0 24px rgba(var(--tc),.65),inset 0 0 28px rgba(var(--tc),.50),inset 0 1px 0 rgba(255,255,255,.30) !important}
+.message[data-tone="g6"]{background:linear-gradient(135deg,rgba(var(--tc),.46),rgba(var(--tc),.28)) !important}
 </style>
 </head>
 <body>
