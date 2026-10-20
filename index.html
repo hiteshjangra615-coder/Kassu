@@ -11,7 +11,7 @@
 <title>Kaashi ke liye — ek chhoti si safe jagah 💗</title>
 <style>
 :root{--ink:#51435f;--muted:#85758e;--pink:#f7c7dd;--rose:#d96b9c;--lav:#e5dcff;--cream:#fffaf1;--card:rgba(255,255,255,.82);--line:#f0dce9;--shadow:0 18px 55px rgba(114,77,123,.12)}
-*{box-sizing:border-box}html{min-height:100%;background:#fff7fb}body{margin:0;min-height:100vh;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;background:#211338 url('purple-sky.jpg') center center/cover fixed no-repeat;overflow-x:hidden}
+*{box-sizing:border-box}html{min-height:100%;background:#fff7fb}body{margin:0;min-height:100vh;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;background:#211338 url('purple-sky-v2.jpg') center center/cover fixed no-repeat;overflow-x:hidden}
 button,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,textarea:focus-visible{outline:3px solid #b88cdb;outline-offset:3px}
 .floaties{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;opacity:.65}.floaties span{position:absolute;animation:drift 11s ease-in-out infinite;font-size:clamp(15px,3vw,24px)}.floaties span:nth-child(1){left:7%;top:14%}.floaties span:nth-child(2){right:9%;top:24%;animation-delay:-3s}.floaties span:nth-child(3){left:12%;bottom:14%;animation-delay:-5s}.floaties span:nth-child(4){right:13%;bottom:12%;animation-delay:-7s}.floaties span:nth-child(5){left:48%;top:8%;animation-delay:-2s}
 @keyframes drift{50%{transform:translateY(-12px) rotate(8deg)}}@keyframes enter{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}@keyframes pop{0%{transform:scale(.94)}60%{transform:scale(1.035)}100%{transform:scale(1)}}@keyframes breathe{0%,100%{transform:scale(.9);opacity:.78}50%{transform:scale(1.12);opacity:1}}
@@ -24,7 +24,7 @@ button,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}but
 /* PREMIUM PURPLE GLASS OVERRIDES — CSS ONLY; original content and JS retained */
 :root{--ink:#fbf5ff;--muted:#e2d1ff;--pink:#ff9edb;--rose:#f56fc2;--lav:#d9c3ff;--cream:#fffaf1;--card:rgba(65,29,112,.43);--line:rgba(226,190,255,.58);--shadow:0 0 0 1px rgba(224,185,255,.12),0 18px 55px rgba(30,5,66,.28),0 0 28px rgba(181,112,255,.20)}
 html{min-height:100%;background:#160925}
-body{color:var(--ink);background:#211338 url('purple-sky.jpg') center center/cover fixed no-repeat}
+body{color:var(--ink);background:#211338 url('purple-sky-v2.jpg') center center/cover fixed no-repeat}
 .brand,.footnote,.tiny{color:#f0ddff;text-shadow:0 1px 10px #32104f}
 .counter{background:rgba(104,63,164,.45);color:#fff;border:1px solid rgba(235,204,255,.72);box-shadow:0 0 18px rgba(187,118,255,.22),inset 0 1px 0 #ffffff33;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .track{background:rgba(242,225,255,.62);border:1px solid #ffffff55;box-shadow:0 2px 12px #260a4a55}
@@ -66,7 +66,7 @@ h2{font-size:clamp(34px,7.2vw,42px);margin-bottom:18px;}
    --glass-glow  : edge glow strength
    ========================================================== */
 :root{
-  --glass-tint:.31;
+  --glass-tint:.12;
   --glass-blur:0px;
   --glass-glow:.42;
 }
@@ -455,7 +455,7 @@ html,body{touch-action:pan-y pinch-zoom}
 :root{--glass-tint:.30;--glass-blur:3px;--glass-glow:.45}
 html,body{background:#1c0f45 !important}
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:#1c0f45 url('purple-sky.jpg') center center/cover no-repeat;
+  background:#1c0f45 url('purple-sky-v2.jpg') center center/cover no-repeat;
   filter:saturate(1.2) hue-rotate(-3deg) contrast(1.4)}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -654,23 +654,22 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
    Delete a line to remove that patch.
    ========================================================== */
 .sky-shade{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
-  -webkit-backdrop-filter:saturate(1.45) contrast(1.1) brightness(.92);backdrop-filter:saturate(1.45) contrast(1.1) brightness(.92);
-  background:
+    background:
     linear-gradient(180deg,rgba(40,14,120,.16),rgba(60,20,130,.10) 50%,rgba(70,25,120,.14)),
-    radial-gradient(ellipse 48% 10% at 0% 4%,rgba(24,8,92,0.850),rgba(24,8,92,0.468) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 40% 8% at 100% 9%,rgba(24,8,92,0.800),rgba(24,8,92,0.440) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 34% 7% at 52% 14%,rgba(24,8,92,0.550),rgba(24,8,92,0.303) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 50% 11% at 0% 24%,rgba(24,8,92,0.950),rgba(24,8,92,0.522) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 46% 10% at 100% 30%,rgba(24,8,92,0.900),rgba(24,8,92,0.495) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 32% 7% at 48% 38%,rgba(24,8,92,0.550),rgba(24,8,92,0.303) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 54% 11% at 0% 46%,rgba(24,8,92,0.980),rgba(24,8,92,0.539) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 50% 10% at 100% 53%,rgba(24,8,92,0.950),rgba(24,8,92,0.522) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 36% 8% at 50% 61%,rgba(24,8,92,0.600),rgba(24,8,92,0.330) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 52% 10% at 0% 70%,rgba(24,8,92,0.900),rgba(24,8,92,0.495) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 48% 10% at 100% 77%,rgba(24,8,92,0.850),rgba(24,8,92,0.468) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 34% 7% at 45% 84%,rgba(24,8,92,0.500),rgba(24,8,92,0.275) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 54% 9% at 0% 92%,rgba(24,8,92,0.800),rgba(24,8,92,0.440) 45%,rgba(24,8,92,0.000) 100%),
-    radial-gradient(ellipse 50% 9% at 100% 98%,rgba(24,8,92,0.750),rgba(24,8,92,0.413) 45%,rgba(24,8,92,0.000) 100%)}
+    radial-gradient(ellipse 48% 10% at 0% 4%,rgba(24,8,92,0.595),rgba(24,8,92,0.328) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 40% 8% at 100% 9%,rgba(24,8,92,0.560),rgba(24,8,92,0.308) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 34% 7% at 52% 14%,rgba(24,8,92,0.385),rgba(24,8,92,0.212) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 11% at 0% 24%,rgba(24,8,92,0.665),rgba(24,8,92,0.365) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 46% 10% at 100% 30%,rgba(24,8,92,0.630),rgba(24,8,92,0.346) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 32% 7% at 48% 38%,rgba(24,8,92,0.385),rgba(24,8,92,0.212) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 54% 11% at 0% 46%,rgba(24,8,92,0.686),rgba(24,8,92,0.377) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 10% at 100% 53%,rgba(24,8,92,0.665),rgba(24,8,92,0.365) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 36% 8% at 50% 61%,rgba(24,8,92,0.420),rgba(24,8,92,0.231) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 52% 10% at 0% 70%,rgba(24,8,92,0.630),rgba(24,8,92,0.346) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 48% 10% at 100% 77%,rgba(24,8,92,0.595),rgba(24,8,92,0.328) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 34% 7% at 45% 84%,rgba(24,8,92,0.350),rgba(24,8,92,0.193) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 54% 9% at 0% 92%,rgba(24,8,92,0.560),rgba(24,8,92,0.308) 45%,rgba(24,8,92,0.000) 100%),
+    radial-gradient(ellipse 50% 9% at 100% 98%,rgba(24,8,92,0.525),rgba(24,8,92,0.289) 45%,rgba(24,8,92,0.000) 100%)}
 
 /* ==========================================================
    CHAPTER 6 — "Ek aur pyaari baat": har tap par line ka colour ek baar
@@ -718,6 +717,13 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
 .panel,.counter,.btn.secondary,.soft-note,.message,.privacy,.choice,.gift,.thoughts,.letter-final{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
 .panel{-webkit-backdrop-filter:saturate(125%) !important;backdrop-filter:saturate(125%) !important}
 
+
+/* MATCH REFERENCE: clear light glass, nothing blurred or darkened behind the card */
+.panel{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.03) 45%,rgba(200,160,255,.10)),rgba(150,115,235,.20) !important;
+ border:1px solid rgba(225,200,255,.75) !important;
+ box-shadow:0 0 0 1px rgba(190,150,255,.18),0 0 22px rgba(175,125,255,.40),inset 0 0 30px rgba(215,185,255,.18),inset 0 1px 0 rgba(255,255,255,.45) !important;
+ -webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+.counter,.btn.secondary{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
 </style>
 </head>
 <body>
