@@ -724,10 +724,57 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
  box-shadow:0 0 0 1px rgba(190,150,255,.18),0 0 22px rgba(175,125,255,.40),inset 0 0 30px rgba(215,185,255,.18),inset 0 1px 0 rgba(255,255,255,.45) !important;
  -webkit-backdrop-filter:none !important;backdrop-filter:none !important}
 .counter,.btn.secondary{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+
+/* ==========================================================
+   SAME BACKGROUND EVERYWHERE — cover jaisa dark vignette (chapters me bhi)
+   + halke dark-indigo clouds, gap gap me, dheere dheere hilte hue.
+   Cloud ghatana/badhana: .sky-clouds ki lines me last number (alpha) badlo.
+   ========================================================== */
+.sky-vig{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.3s ease;
+  background:radial-gradient(ellipse at 50% 42%,rgba(60,20,110,.10),rgba(14,4,38,.50) 88%)}
+body.opened .sky-vig{opacity:1}
+.sky-clouds{position:fixed;inset:-5%;z-index:0;pointer-events:none;animation:cloudDrift 46s ease-in-out infinite alternate;will-change:transform;
+  background:
+radial-gradient(ellipse 33% 5.7% at 14.0% 9.0%,rgba(30,14,112,0.500),rgba(30,14,112,0.250) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 23% 4.6% at 4.1% 11.2%,rgba(30,14,112,0.425),rgba(30,14,112,0.212) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 25% 4.9% at 23.9% 7.35%,rgba(30,14,112,0.400),rgba(30,14,112,0.200) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 30% 5.2% at 86.0% 17.0%,rgba(30,14,112,0.460),rgba(30,14,112,0.230) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 21% 4.2% at 77.0% 19.0%,rgba(30,14,112,0.391),rgba(30,14,112,0.196) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 22% 4.4% at 95.0% 15.5%,rgba(30,14,112,0.368),rgba(30,14,112,0.184) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 24% 4.2% at 40.0% 27.0%,rgba(30,14,112,0.340),rgba(30,14,112,0.170) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 17% 3.3% at 32.8% 28.6%,rgba(30,14,112,0.289),rgba(30,14,112,0.145) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 18% 3.5% at 47.2% 25.8%,rgba(30,14,112,0.272),rgba(30,14,112,0.136) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 33% 5.7% at 10.0% 38.0%,rgba(30,14,112,0.520),rgba(30,14,112,0.260) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 23% 4.6% at 0.09999999999999964% 40.2%,rgba(30,14,112,0.442),rgba(30,14,112,0.221) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 25% 4.9% at 19.9% 36.35%,rgba(30,14,112,0.416),rgba(30,14,112,0.208) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 33% 5.7% at 90.0% 46.0%,rgba(30,14,112,0.500),rgba(30,14,112,0.250) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 23% 4.6% at 80.1% 48.2%,rgba(30,14,112,0.425),rgba(30,14,112,0.212) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 25% 4.9% at 99.9% 44.35%,rgba(30,14,112,0.400),rgba(30,14,112,0.200) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 24% 4.2% at 55.0% 56.0%,rgba(30,14,112,0.340),rgba(30,14,112,0.170) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 17% 3.3% at 47.8% 57.6%,rgba(30,14,112,0.289),rgba(30,14,112,0.145) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 18% 3.5% at 62.2% 54.8%,rgba(30,14,112,0.272),rgba(30,14,112,0.136) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 30% 5.2% at 12.0% 66.0%,rgba(30,14,112,0.480),rgba(30,14,112,0.240) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 21% 4.2% at 3.0% 68.0%,rgba(30,14,112,0.408),rgba(30,14,112,0.204) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 22% 4.4% at 21.0% 64.5%,rgba(30,14,112,0.384),rgba(30,14,112,0.192) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 30% 5.2% at 88.0% 74.0%,rgba(30,14,112,0.480),rgba(30,14,112,0.240) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 21% 4.2% at 79.0% 76.0%,rgba(30,14,112,0.408),rgba(30,14,112,0.204) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 22% 4.4% at 97.0% 72.5%,rgba(30,14,112,0.384),rgba(30,14,112,0.192) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 24% 4.2% at 42.0% 82.0%,rgba(30,14,112,0.320),rgba(30,14,112,0.160) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 17% 3.3% at 34.8% 83.6%,rgba(30,14,112,0.272),rgba(30,14,112,0.136) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 18% 3.5% at 49.2% 80.8%,rgba(30,14,112,0.256),rgba(30,14,112,0.128) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 30% 5.2% at 14.0% 92.0%,rgba(30,14,112,0.440),rgba(30,14,112,0.220) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 21% 4.2% at 5.0% 94.0%,rgba(30,14,112,0.374),rgba(30,14,112,0.187) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 22% 4.4% at 23.0% 90.5%,rgba(30,14,112,0.352),rgba(30,14,112,0.176) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 30% 5.2% at 84.0% 97.0%,rgba(30,14,112,0.440),rgba(30,14,112,0.220) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 21% 4.2% at 75.0% 99.0%,rgba(30,14,112,0.374),rgba(30,14,112,0.187) 50%,rgba(30,14,112,0.000) 100%),
+    radial-gradient(ellipse 22% 4.4% at 93.0% 95.5%,rgba(30,14,112,0.352),rgba(30,14,112,0.176) 50%,rgba(30,14,112,0.000) 100%)}
+@keyframes cloudDrift{from{transform:translate3d(-1.5%,0,0)}to{transform:translate3d(1.5%,-1%,0)}}
 </style>
 </head>
 <body>
 <div class="sky-shade" aria-hidden="true"></div>
+<div class="sky-vig" aria-hidden="true"></div>
+<div class="sky-clouds" aria-hidden="true"></div>
 <div class="floaties" aria-hidden="true"><span>♡</span><span>✦</span><span>🌷</span><span>♡</span><span>✧</span></div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 <div class="mood-fx" id="moodfx" aria-hidden="true"></div>
