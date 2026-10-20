@@ -720,7 +720,8 @@ const chapters = [
 <button class="choice" data-mood="tired"><span class="emoji">🧸</span><strong>Bahut thak gayi hoon</strong><small>Rest ki permission</small></button>
 <button class="choice" data-mood="alone"><span class="emoji">🌙</span><strong>Akela feel ho raha hai</strong><small>Ek gentle reminder</small></button>
 <button class="choice" data-mood="happy"><span class="emoji">🍓</span><strong>Kuch cute chahiye</strong><small>Little smile corner</small></button>
-</div><div class="message" id="moodMessage" role="status"></div>`},
+</div><div class="message" id="moodMessage" role="status"></div>
+<button class="back-up" type="button" data-action="backToMoods" id="backToMoods" hidden>↑ wapas gifts par</button>`},
 {label:"Tiny surprise gifts",render:()=>`
 <div class="eyebrow">tap to unwrap 🎁</div><h2>Chhote-chhote gifts, sirf aapke liye</h2><p>Har box mein ek alag baat chhupi hai. Aap sab khol sakti hain, ya bas apna favourite choose kar sakti hain.</p>
 <div class="gift-grid">
@@ -1052,9 +1053,10 @@ prev.addEventListener('click',()=>go(index-1));next.addEventListener('click',()=
 })();
 panel.addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
- if(b.dataset.mood){const el=document.getElementById('moodMessage');showTouch(el,moodText[b.dataset.mood],b.dataset.mood);setMoodFx(b.dataset.mood);glideTo(el,'center');return;}
+ if(b.dataset.mood){const el=document.getElementById('moodMessage');showTouch(el,moodText[b.dataset.mood],b.dataset.mood);setMoodFx(b.dataset.mood);const bm=document.getElementById('backToMoods');if(bm)bm.hidden=false;glideTo(el,'center');return;}
  if(b.dataset.gift!==undefined){const n=Number(b.dataset.gift), el=document.getElementById('giftMessage');showTouch(el,gifts[n],'g'+n);b.classList.add('opened');b.querySelector('small').textContent='opened with care 💗';setMoodFx('g'+n);if(n===7){showSong();const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2000);}const bk=document.getElementById('backToGifts');if(bk)bk.hidden=false;glideTo(el,n===7?'start':'center');return;}
  if(b.dataset.action==='backToGifts'){const g=panel.querySelector('.gift-grid');if(g)glideTo(g,'start');return;}
+ if(b.dataset.action==='backToMoods'){const g=panel.querySelector('.mood-grid');if(g)glideTo(g,'start');return;}
  if(b.dataset.action==='openLetter'){startLetter();return;}
   if(b.dataset.action==='skipLetter'){finishLetter();return;}
   if(b.dataset.action==='random'){let line=lines[Math.floor(Math.random()*lines.length)];const el=document.getElementById('randomLine');if(lines.length>1&&el.textContent===line)line=lines[(lines.indexOf(line)+1)%lines.length];el.textContent=line;el.animate?.([{opacity:.3,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{duration:220});}
