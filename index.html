@@ -733,15 +733,15 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
 #letterPromise .lp-run .h{stroke-width:9;stroke-opacity:.24}
 #letterPromise .lp-run .rg{stroke:url(#lpRingGrad);stroke-width:2.2;stroke-dasharray:none;opacity:.9;animation:lpFade 2s ease both}
 #letterPromise .lp-run .r1{color:#ffe066}
-#letterPromise .lp-run .r2{color:#4de1ff}
+#letterPromise .lp-run .r2{color:#ff4fc8}
 #letterPromise .lp-run .rf{color:#fff6d8;stroke-dasharray:none;stroke-width:2.4}
 #letterPromise.lp-go .lp-run .r1{animation:lpA 11s ease-in-out infinite}
 #letterPromise.lp-go .lp-run .r2{animation:lpB 11s ease-in-out infinite}
 #letterPromise.lp-go .lp-run .rf{animation:snPulse 11s ease-in-out infinite}
 @keyframes lpFade{from{opacity:0}to{opacity:.9}}
 @keyframes lpA{
-  0%,5%{stroke-dashoffset:0;opacity:0;color:#ff9a3c}
-  9%{opacity:1;color:#ffe066}
+  0%{stroke-dashoffset:0;opacity:0;color:#ff9a3c}
+  3%{opacity:1;color:#ffe066}
   45%{stroke-dashoffset:-32;opacity:1;color:#ffe066}
   50%{stroke-dashoffset:-32;opacity:.35;color:#ff9a3c}
   55%{stroke-dashoffset:-32;opacity:1;color:#ff9a3c}
@@ -749,13 +749,13 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
   95%,100%{stroke-dashoffset:0;opacity:0;color:#ff9a3c}
 }
 @keyframes lpB{
-  0%,5%{stroke-dashoffset:-84;opacity:0;color:#7dff8a}
-  9%{opacity:1;color:#4de1ff}
-  45%{stroke-dashoffset:-50;opacity:1;color:#4de1ff}
-  50%{stroke-dashoffset:-50;opacity:.35;color:#7dff8a}
-  55%{stroke-dashoffset:-50;opacity:1;color:#7dff8a}
-  91%{opacity:1;color:#7dff8a}
-  95%,100%{stroke-dashoffset:-84;opacity:0;color:#7dff8a}
+  0%{stroke-dashoffset:-84;opacity:0;color:#ff6a5c}
+  3%{opacity:1;color:#ff4fc8}
+  45%{stroke-dashoffset:-50;opacity:1;color:#ff4fc8}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#ff6a5c}
+  55%{stroke-dashoffset:-50;opacity:1;color:#ff6a5c}
+  91%{opacity:1;color:#ff6a5c}
+  95%,100%{stroke-dashoffset:-84;opacity:0;color:#ff6a5c}
 }
 /* last line "Main hoon sunne ke liye 💌": stays inside the paragraph (like chapter 1 & 2).
    Coloured line drawn under it the moment the paragraph appears, with a soft light running along that same line. */
@@ -764,7 +764,7 @@ body::before,body::after,.fx,.floaties,.mood-fx,.cover,.fxrain,.tapburst{top:0;l
     linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95) 50%,rgba(255,255,255,0)) no-repeat -60% 100%/32% 2px,
     linear-gradient(90deg,#c9a0ff 0%,#ff9bd8 50%,#7dffd0 100%) no-repeat 0 100%/0% 2px}
 #letterPromise .wd.pm-hl{font-weight:800;color:#fff4fc;text-shadow:0 0 10px rgba(255,150,220,.8)}
-#letterPromise.lp-go .pm-k2{animation:pmDraw 1.8s cubic-bezier(.22,1,.36,1) .3s forwards,pmRun 4.2s ease-in-out 2.3s infinite}
+#letterPromise.lp-go .pm-k2{animation:pmDraw 1.8s cubic-bezier(.22,1,.36,1) calc(var(--hd,1s) + 1.7s) forwards,pmRun 4.2s ease-in-out calc(var(--hd,1s) + 3.7s) infinite}
 @keyframes pmDraw{to{background-size:32% 2px,100% 2px}}
 @keyframes pmRun{0%,100%{background-position:-60% 100%,0 100%}50%{background-position:160% 100%,0 100%}}
 @media(prefers-reduced-motion:reduce){#letterPromise .lp-run .r1,#letterPromise .lp-run .r2,#letterPromise .lp-run .rf{display:none}#letterPromise .pm-k2{animation:none!important;background-size:32% 2px,100% 2px}#letterPromise .lp-run .rg{animation:none}}
@@ -1093,7 +1093,7 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 /* ---- last chapter ("Main hoon sunne ke liye"): border immediately, highlight when its words are in ---- */
 #letterPromise .lp-run .rg{animation:lpFade .45s ease both}
 #letterPromise.lp-go .lp-run .r1,#letterPromise.lp-go .lp-run .r2,#letterPromise.lp-go .lp-run .rf{animation-delay:-.55s}
-#letterPromise.lp-go .pm-k2{animation:pmDraw 1.4s cubic-bezier(.22,1,.36,1) var(--hd,.8s) forwards,pmRun 4.2s ease-in-out calc(var(--hd,.8s) + 1.6s) infinite}
+#letterPromise.lp-go .pm-k2{animation:pmDraw 1.4s cubic-bezier(.22,1,.36,1) calc(var(--hd,.8s) + .9s) forwards,pmRun 4.2s ease-in-out calc(var(--hd,.8s) + 2.9s) infinite}
 @media(prefers-reduced-motion:reduce){#letterPromise .pm-k2{animation:none!important;background-size:32% 2px,100% 2px}}
 
 /* ==========================================================
@@ -1136,6 +1136,17 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
   91%{opacity:1;color:#ffffff}
   95%,100%{stroke-dashoffset:-84;opacity:0;color:#ffffff}
 }
+
+/* ==========================================================
+   CHAPTER 8 colour match
+   "Main hoon sunne ke liye": border cyan-blue hai -> andar/bahar ka glow bhi wahi cyan-blue.
+   Border par chalne wali lights (gold, hot-pink, orange, coral) cyan se alag rang ki hain, isliye saaf dikhti hain.
+   "You deserve...": andar pink glow hai -> border bhi wahi pink.
+   ========================================================== */
+#letterPromise{--tc:77,225,255}
+#letterPromise[data-fx]{box-shadow:0 0 24px rgba(77,225,255,.50),inset 0 0 32px rgba(77,225,255,.32),inset 0 1px 0 rgba(255,255,255,.30) !important}
+#letterFinal{--tc:255,150,215}
+#letterFinal[data-fx]{border:1.5px solid rgba(255,150,215,.95) !important;box-shadow:0 0 24px rgba(255,150,215,.50),inset 0 0 30px rgba(255,150,215,.30),inset 0 1px 0 rgba(255,255,255,.30) !important}
 </style>
 </head>
 <body>
