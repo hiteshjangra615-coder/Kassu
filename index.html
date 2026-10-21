@@ -1067,6 +1067,75 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
   .star-note::before,.star-note::after,.star-note .sn-star,.star-note .sn-emoji,.star-note .sn-k1{animation:none!important}
   .star-note::after,.star-note .sn-run .r1,.star-note .sn-run .r2,.star-note .sn-run .rf{display:none}.star-note .sn-star{opacity:.7}.star-note .sn-run .rg{animation:none!important}
   .star-note .sn-k2{animation:none!important;background-size:100% 2px}}
+
+/* ==========================================================
+   TIMING FIX (chapter 1, 2 + last chapter paragraph)
+   1) Border light starts the SAME moment the paragraph appears (no waiting).
+   2) Highlight line under the key words comes ~0.8 s AFTER the border light has started.
+   3) Chapter 2 last paragraph (green): no more "appear -> vanish -> appear again".
+   ========================================================== */
+/* ---- chapter 1 (moon note): paragraph appears at --st, border runs from --st, highlight at --st + .8s ---- */
+.moon-note{--st:calc(1.6s + var(--i)*.65s)}
+.moon-note .mn-run .r1,.moon-note .mn-run .r2,.moon-note .mn-run .rf{animation-delay:calc(var(--st) - .55s)}
+.moon-note .mn-k2{animation:mnDraw 1.4s cubic-bezier(.22,1,.36,1) calc(var(--st) + .8s) forwards}
+.moon-note .mn-k1{animation-delay:calc(var(--st) + 2.2s)}
+@media(prefers-reduced-motion:reduce){.moon-note .mn-k2{animation:none!important;background-size:100% 2px}}
+
+/* ---- chapter 2 (green note): border starts the moment it comes on screen, highlight .8 s later ---- */
+.qual.star-note{animation:none}                 /* stops the old qualIn replay that made it vanish and come back */
+.star-note.go .sn-run .r1,.star-note.go .sn-run .r2,.star-note.go .sn-run .rf{animation-delay:-.55s}
+.star-note.go .sn-k2{animation:mnDraw 1.4s cubic-bezier(.22,1,.36,1) .8s forwards}
+.star-note.go .sn-k1{animation-delay:2.2s}
+.star-note.go::before{animation-delay:0s}
+.star-note.go::after{animation-delay:1.6s}
+@media(prefers-reduced-motion:reduce){.star-note .sn-k2{animation:none!important;background-size:100% 2px}}
+
+/* ---- last chapter ("Main hoon sunne ke liye"): border immediately, highlight when its words are in ---- */
+#letterPromise .lp-run .rg{animation:lpFade .45s ease both}
+#letterPromise.lp-go .lp-run .r1,#letterPromise.lp-go .lp-run .r2,#letterPromise.lp-go .lp-run .rf{animation-delay:-.55s}
+#letterPromise.lp-go .pm-k2{animation:pmDraw 1.4s cubic-bezier(.22,1,.36,1) var(--hd,.8s) forwards,pmRun 4.2s ease-in-out calc(var(--hd,.8s) + 1.6s) infinite}
+@media(prefers-reduced-motion:reduce){#letterPromise .pm-k2{animation:none!important;background-size:32% 2px,100% 2px}}
+
+/* ==========================================================
+   LAST CHAPTER — two paragraphs, two DIFFERENT looks (border + glow)
+   Both used to share the card's lavender border, so the border vanished into the background.
+   Upper  (#letterFinal  "You deserve...")        : warm GOLD border + golden glow
+   Lower  (#letterPromise "Main hoon sunne ke..."): AQUA border + aqua glow, runners in pink / gold / orange
+   To change a colour: edit the r,g,b numbers below.
+   ========================================================== */
+#letterFinal{--tc:255,200,80}
+#letterPromise{--tc:70,225,255}
+#letterFinal,#letterFinal[data-fx]{
+  border:2px solid rgba(255,205,90,.98) !important;
+  box-shadow:0 0 0 1px rgba(255,225,150,.30),0 0 14px rgba(255,200,80,.75),0 0 34px rgba(255,170,60,.50),inset 0 0 22px rgba(255,200,90,.22),inset 0 1px 0 rgba(255,255,255,.40) !important}
+#letterPromise,#letterPromise[data-fx]{
+  border:2px solid rgba(90,232,255,.98) !important;
+  box-shadow:0 0 0 1px rgba(170,245,255,.30),0 0 14px rgba(70,225,255,.75),0 0 34px rgba(40,190,255,.50),inset 0 0 22px rgba(70,225,255,.22),inset 0 1px 0 rgba(255,255,255,.40) !important}
+#letterPromise .lp-run .rg{stroke-width:2.6;opacity:1;filter:drop-shadow(0 0 5px rgba(90,232,255,.9))}
+#letterPromise .lp-run .r1{color:#ffd84d}
+#letterPromise .lp-run .r2{color:#ff5fb0}
+#letterPromise .lp-run .rf{color:#ffffff}
+#letterPromise.lp-go .lp-run .r1{animation:lpA2 11s ease-in-out -.55s infinite}
+#letterPromise.lp-go .lp-run .r2{animation:lpB2 11s ease-in-out -.55s infinite}
+/* going: gold + hot pink  |  coming back: orange + white  (none of them is aqua, so they always show on the border) */
+@keyframes lpA2{
+  0%,5%{stroke-dashoffset:0;opacity:0;color:#ff9a3c}
+  9%{opacity:1;color:#ffd84d}
+  45%{stroke-dashoffset:-32;opacity:1;color:#ffd84d}
+  50%{stroke-dashoffset:-32;opacity:.35;color:#ff9a3c}
+  55%{stroke-dashoffset:-32;opacity:1;color:#ff9a3c}
+  91%{opacity:1;color:#ff9a3c}
+  95%,100%{stroke-dashoffset:0;opacity:0;color:#ff9a3c}
+}
+@keyframes lpB2{
+  0%,5%{stroke-dashoffset:-84;opacity:0;color:#ffffff}
+  9%{opacity:1;color:#ff5fb0}
+  45%{stroke-dashoffset:-50;opacity:1;color:#ff5fb0}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#ffffff}
+  55%{stroke-dashoffset:-50;opacity:1;color:#ffffff}
+  91%{opacity:1;color:#ffffff}
+  95%,100%{stroke-dashoffset:-84;opacity:0;color:#ffffff}
+}
 </style>
 </head>
 <body>
@@ -1240,7 +1309,7 @@ function promiseGlow(){
  const el=document.getElementById('letterPromise');
  if(!el||el.hidden||el.querySelector('.lp-run'))return;
  const r=c=>'<rect class="'+c+'" x="0" y="0" width="100%" height="100%" rx="17" pathLength="100"/>';
- el.insertAdjacentHTML('beforeend','<svg class="lp-run" aria-hidden="true" focusable="false"><defs><linearGradient id="lpRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2c8ff"/><stop offset=".5" stop-color="#f3d0ff"/><stop offset="1" stop-color="#c3a8ff"/></linearGradient></defs>'+r('rg')+r('r1 h')+r('r2 h')+r('r1')+r('r2')+r('rf')+'</svg>');
+ el.insertAdjacentHTML('beforeend','<svg class="lp-run" aria-hidden="true" focusable="false"><defs><linearGradient id="lpRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7df3ff"/><stop offset=".5" stop-color="#c4fff0"/><stop offset="1" stop-color="#4de1ff"/></linearGradient></defs>'+r('rg')+r('r1 h')+r('r2 h')+r('r1')+r('r2')+r('rf')+'</svg>');
  requestAnimationFrame(()=>el.classList.add('lp-go'));
 }
 function revealEl(id){const el=document.getElementById(id);if(!el)return;el.hidden=false;el.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)el.scrollIntoView({behavior:'smooth',block:'center'});}
@@ -1268,7 +1337,7 @@ function fxPara(id){
 }
 function promiseLast(el){
  const w=[...el.querySelectorAll('.wd')];if(w.length<6)return;
- const first=w[w.length-6],wrap=document.createElement('span');wrap.className='pm-k2';
+ const first=w[w.length-6],wrap=document.createElement('span');wrap.className='pm-k2';wrap.style.setProperty('--hd',Math.max(.8,(w.length-6)*.1+.6).toFixed(2)+'s');
  el.insertBefore(wrap,first);
  const nodes=[];for(let n=first;n;n=n.nextSibling)nodes.push(n);
  nodes.forEach(x=>wrap.appendChild(x));
@@ -1443,7 +1512,7 @@ function render(){
   row.insertAdjacentHTML('beforeend','<button class="btn'+(hasOthers?' secondary':'')+'" data-action="sparkle">A little sparkle ✨</button>');
  }
  const sn=panel.querySelector('.star-note');
- if(sn){if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){sn.classList.add('go');io.disconnect();}});},{threshold:.75});io.observe(sn);}else{setTimeout(()=>sn.classList.add('go'),1200);}}
+ if(sn){if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){sn.classList.add('go');io.disconnect();}});},{threshold:.3});io.observe(sn);}else{setTimeout(()=>sn.classList.add('go'),1200);}}
  counter.textContent=`Chapter ${index+1} of ${chapters.length}`;bar.style.width=((index+1)/chapters.length*100)+'%';progress.setAttribute('aria-valuenow',index+1);
  prev.disabled=index===0;next.textContent=index===chapters.length-1?'Back to start 🔄':'Next →';
 }
