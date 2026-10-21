@@ -1328,6 +1328,29 @@ body.is-scrolling .floaties span{animation-play-state:paused !important}
 .star-note .sn-text{text-shadow:0 1px 3px rgba(40,10,90,.55)}
 .star-note .sn-run .rg{stroke-width:3;opacity:1;filter:drop-shadow(0 0 6px rgba(255,190,240,.85))}
 .star-note .sn-run .r1,.star-note .sn-run .r2{stroke-width:4}
+
+/* ==========================================================
+   CHAPTER 2 — CONSTELLATION THREAD
+   Ek chamakti line upar se neeche aati hai. Jis paragraph ke emoji tak pahunchti hai,
+   wahan ek sitara phoolta hai aur card dheere se roshan hota hai.
+   Timing JS se set hoti hai (--ct-at, --ct-t0, --ct-dur). Reduced-motion me band.
+   ========================================================== */
+.qual-list{position:relative}
+.qual-list .qual{position:relative;animation:ctLight 1.1s cubic-bezier(.22,1,.36,1) var(--ct-at,0s) both}
+.qual-list .qual::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;pointer-events:none;border:1.5px solid rgba(255,170,235,.95);box-shadow:0 0 22px rgba(255,150,225,.75),inset 0 0 18px rgba(255,150,225,.30);opacity:0;animation:ctRing 2s ease-out var(--ct-at,0s) both}
+.qual-list .qual::after{content:"";position:absolute;left:28px;top:28px;width:28px;height:28px;margin:-14px 0 0 -14px;pointer-events:none;z-index:2;background:radial-gradient(circle,#fff 0,#ffe0f7 38%,#ff9ee0 75%);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);filter:drop-shadow(0 0 6px #ffb8ea);opacity:0;animation:ctPop 1.2s ease-out var(--ct-at,0s) both}
+.qual-list .qual>span{animation:ctEmoji 1s cubic-bezier(.34,1.56,.64,1) var(--ct-at,0s) both}
+.ct-thread{position:absolute;left:29px;width:2px;margin-left:-1px;z-index:0;pointer-events:none}
+.ct-line{position:absolute;top:0;left:0;width:2px;height:0;border-radius:2px;background:linear-gradient(180deg,#ff9ee0,#b794ff 55%,#7fe3ff);box-shadow:0 0 8px rgba(255,150,225,.9),0 0 16px rgba(170,130,255,.55);animation:ctGrow var(--ct-dur,2.6s) linear var(--ct-t0,.9s) both,ctSettle 3.6s ease-in-out calc(var(--ct-t0,.9s) + var(--ct-dur,2.6s)) infinite alternate}
+.ct-head{position:absolute;left:1px;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe8f8 38%,rgba(255,158,224,0) 72%);box-shadow:0 0 14px 4px rgba(255,170,235,.75);opacity:0;animation:ctHead var(--ct-dur,2.6s) linear var(--ct-t0,.9s) both}
+@keyframes ctGrow{from{height:0}to{height:100%}}
+@keyframes ctHead{0%{top:0;opacity:1}94%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes ctSettle{from{opacity:.95}to{opacity:.45}}
+@keyframes ctLight{0%{opacity:0;transform:translateY(14px) scale(.96);filter:blur(5px)}100%{opacity:1;transform:none;filter:blur(0)}}
+@keyframes ctRing{0%{opacity:0}22%{opacity:1}100%{opacity:0}}
+@keyframes ctPop{0%{opacity:0;transform:scale(.2) rotate(0deg)}30%{opacity:1;transform:scale(1.5) rotate(45deg)}100%{opacity:0;transform:scale(.8) rotate(90deg)}}
+@keyframes ctEmoji{0%{opacity:0;transform:scale(.3)}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.qual-list .qual,.qual-list .qual>span{animation:none!important}.qual-list .qual::before,.qual-list .qual::after,.ct-thread{display:none!important}}
 </style>
 </head>
 <body>
@@ -1514,7 +1537,7 @@ function endingSequence(){
  at(300,()=>sprinkle(['✨','✨','💜','✨']));
  at(2100,()=>{fxPara('letterPromise');promiseGlow();const e=document.getElementById('letterPromise');if(e){e.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)e.scrollIntoView({behavior:'smooth',block:'center'});}});
  
- at(9000,heartOfStars);  /* dil: paragraph padhne ke baad (paragraph 2.1s pe aata hai) */
+ at(7000,heartOfStars);  /* dil: paragraph padhne ke baad (2 sec jaldi) */
  at(11600,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2800);});
  at(12300,()=>revealEl('letterWish'));
  at(14100,()=>revealEl('letterSign'));
@@ -1691,6 +1714,16 @@ function stopSong(){
  if(window.__songCtrl){try{window.__songCtrl.pause();}catch(_){}window.__songCtrl=null;}
  if(window.__kassuBg)window.__kassuBg.restore();
 }
+function constellation(){
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const list=panel.querySelector('.qual-list');if(!list)return;
+ const cards=[...list.querySelectorAll('.qual')];if(cards.length<2)return;
+ const ys=cards.map(q=>q.offsetTop+28),y0=ys[0],yL=ys[ys.length-1],span=Math.max(1,yL-y0);
+ const t0=.9,dur=Math.max(2.2,Math.min(3.4,span/110));
+ list.style.setProperty('--ct-t0',t0+'s');list.style.setProperty('--ct-dur',dur+'s');
+ cards.forEach((q,i)=>q.style.setProperty('--ct-at',(t0+dur*(ys[i]-y0)/span).toFixed(2)+'s'));
+ list.insertAdjacentHTML('afterbegin','<i class="ct-thread" aria-hidden="true" style="top:'+y0+'px;height:'+span+'px"><b class="ct-line"></b><b class="ct-head"></b></i>');
+}
 function render(){
  stopSong();
  clearLetterTimer();letterStarted=false;letterComplete=false;clearMoodFx();
@@ -1705,6 +1738,7 @@ function render(){
   if(!row){row=document.createElement('div');row.className='actions';panel.appendChild(row);}
   row.insertAdjacentHTML('beforeend','<button class="btn'+(hasOthers?' secondary':'')+'" data-action="sparkle">A little sparkle ✨</button>');
  }
+ if(index===1)constellation();
  const sn=panel.querySelector('.star-note');
  if(sn){if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){sn.classList.add('go');io.disconnect();}});},{threshold:.3});io.observe(sn);}else{setTimeout(()=>sn.classList.add('go'),1200);}}
  counter.textContent=`Chapter ${index+1} of ${chapters.length}`;bar.style.width=((index+1)/chapters.length*100)+'%';progress.setAttribute('aria-valuenow',index+1);
