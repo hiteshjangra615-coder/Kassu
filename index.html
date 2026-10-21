@@ -958,17 +958,17 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 .qual.star-note .sn-text span{font-size:inherit;line-height:inherit;flex:none}
 .qual.star-note{position:relative;overflow:hidden;margin:6px 0 18px;
   background:
-    radial-gradient(circle at 0% 0%,rgba(236,190,255,.40) 0,rgba(255,170,220,.16) 34%,rgba(255,170,220,0) 64%),
-    linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015)) !important;
+    radial-gradient(circle at 0% 0%,rgba(96,226,146,.38) 0,rgba(96,226,146,.15) 34%,rgba(96,226,146,0) 64%),
+    linear-gradient(135deg,rgba(96,226,146,.16),rgba(96,226,146,.05)) !important;
   border:1px solid rgba(96,226,146,.95) !important;
-  box-shadow:0 0 22px rgba(96,226,146,.55),inset 0 0 24px rgba(96,226,146,.24),inset 0 1px 0 rgba(255,255,255,.30) !important}
+  box-shadow:0 0 22px rgba(96,226,146,.55),inset 0 0 30px rgba(96,226,146,.30),inset 0 1px 0 rgba(255,255,255,.30) !important}
 .star-note::before{content:"";position:absolute;top:-46px;left:-46px;width:130px;height:130px;border-radius:50%;pointer-events:none;z-index:0;
-  background:radial-gradient(circle,rgba(246,214,255,.62) 0,rgba(226,170,255,.26) 40%,rgba(226,170,255,0) 70%);opacity:.5}
+  background:radial-gradient(circle,rgba(170,255,200,.62) 0,rgba(96,226,146,.28) 40%,rgba(96,226,146,0) 70%);opacity:.5}
 .star-note::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:34%;pointer-events:none;z-index:1;
-  background:linear-gradient(100deg,rgba(240,225,255,0) 0%,rgba(240,225,255,.30) 50%,rgba(240,225,255,0) 100%);
+  background:linear-gradient(100deg,rgba(220,255,232,0) 0%,rgba(220,255,232,.28) 50%,rgba(220,255,232,0) 100%);
   transform:translateX(-140%) skewX(-18deg)}
 .star-note .sn-emoji,.star-note .sn-text{position:relative;z-index:2}
-.star-note .sn-star{position:absolute;z-index:1;width:var(--s);height:var(--s);pointer-events:none;background:#f3e4ff;opacity:.15;
+.star-note .sn-star{position:absolute;z-index:1;width:var(--s);height:var(--s);pointer-events:none;background:#e2ffec;opacity:.15;
   clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);filter:drop-shadow(0 0 4px rgba(190,150,255,.95))}
 .star-note .sn-run{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:hidden}
 .star-note .sn-run rect{fill:none;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:18 182;opacity:0;stroke:currentColor;animation-timing-function:ease-in-out}
@@ -976,9 +976,9 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 .star-note .sn-run .rg{stroke:url(#snRingGrad);stroke-width:2.6;stroke-dasharray:none;opacity:.92;
   filter:drop-shadow(0 0 5px rgba(96,226,146,.8))}
 /* two runners: one clockwise, one anti-clockwise, they meet at the opposite corner */
-.star-note .sn-run .r1{color:#7ff6ff;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
-.star-note .sn-run .r2{color:#ffd98a;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
-.star-note .sn-run .rf{color:#f6e6ff;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #e4b8ff)}
+.star-note .sn-run .r1{color:#ff6fc4;stroke-width:4;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
+.star-note .sn-run .r2{color:#ffa05a;stroke-width:4;filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor)}
+.star-note .sn-run .rf{color:#fff0f8;stroke-dasharray:none;stroke-width:2.6;filter:drop-shadow(0 0 8px #ff9bd8)}
 /* "ye sirf aapki achhai hai." — line drawn lavender -> pink -> mint */
 .star-note .sn-k2{padding-bottom:2px;background:linear-gradient(90deg,#c9a0ff 0%,#ff9bd8 50%,#7dffd0 100%) no-repeat 0 100%/0% 2px}
 /* everything below starts only after the box has been seen (.go) */
@@ -991,22 +991,22 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 .star-note.go .sn-run .r2{animation:snRunB 7.6s ease-in-out infinite}
 .star-note.go .sn-run .rf{animation:snPulse 7.6s ease-in-out infinite}
 @keyframes snRunA{
-  0%,5%{stroke-dashoffset:0;opacity:0;color:#ff86d6}
-  9%{opacity:1;color:#7ff6ff}
-  45%{stroke-dashoffset:-32;opacity:1;color:#7ff6ff}
-  50%{stroke-dashoffset:-32;opacity:.35;color:#ff86d6}
-  55%{stroke-dashoffset:-32;opacity:1;color:#ff86d6}
-  91%{opacity:1;color:#ff86d6}
-  95%,100%{stroke-dashoffset:0;opacity:0;color:#ff86d6}
+  0%,5%{stroke-dashoffset:0;opacity:0;color:#c9a0ff}
+  9%{opacity:1;color:#ff6fc4}
+  45%{stroke-dashoffset:-32;opacity:1;color:#ff6fc4}
+  50%{stroke-dashoffset:-32;opacity:.35;color:#c9a0ff}
+  55%{stroke-dashoffset:-32;opacity:1;color:#c9a0ff}
+  91%{opacity:1;color:#c9a0ff}
+  95%,100%{stroke-dashoffset:0;opacity:0;color:#c9a0ff}
 }
 @keyframes snRunB{
-  0%,5%{stroke-dashoffset:-82;opacity:0;color:#7dffd0}
-  9%{opacity:1;color:#ffd98a}
-  45%{stroke-dashoffset:-50;opacity:1;color:#ffd98a}
-  50%{stroke-dashoffset:-50;opacity:.35;color:#7dffd0}
-  55%{stroke-dashoffset:-50;opacity:1;color:#7dffd0}
-  91%{opacity:1;color:#7dffd0}
-  95%,100%{stroke-dashoffset:-82;opacity:0;color:#7dffd0}
+  0%,5%{stroke-dashoffset:-82;opacity:0;color:#5fb8ff}
+  9%{opacity:1;color:#ffa05a}
+  45%{stroke-dashoffset:-50;opacity:1;color:#ffa05a}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#5fb8ff}
+  55%{stroke-dashoffset:-50;opacity:1;color:#5fb8ff}
+  91%{opacity:1;color:#5fb8ff}
+  95%,100%{stroke-dashoffset:-82;opacity:0;color:#5fb8ff}
 }
 @keyframes snPulse{0%{opacity:.5}8%{opacity:0}46%{opacity:0}50%{opacity:.55}58%{opacity:0}92%{opacity:0}100%{opacity:.5}}
 @keyframes snRingHue{from{filter:hue-rotate(-18deg) drop-shadow(0 0 4px rgba(201,160,255,.6))}to{filter:hue-rotate(32deg) drop-shadow(0 0 9px rgba(255,155,216,.85))}}
