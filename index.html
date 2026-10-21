@@ -1147,6 +1147,77 @@ body:not(.opened) .moon-note .mn-run rect{animation-play-state:paused!important}
 #letterPromise[data-fx]{box-shadow:0 0 24px rgba(77,225,255,.50),inset 0 0 32px rgba(77,225,255,.32),inset 0 1px 0 rgba(255,255,255,.30) !important}
 #letterFinal{--tc:255,150,215}
 #letterFinal[data-fx]{border:1.5px solid rgba(255,150,215,.95) !important;box-shadow:0 0 24px rgba(255,150,215,.50),inset 0 0 30px rgba(255,150,215,.30),inset 0 1px 0 rgba(255,255,255,.30) !important}
+
+/* ==========================================================
+   LAST CHAPTER — "Main hoon sunne ke liye 💌" paragraph
+   1) Border + glow (andar bhi, bahar bhi) sab BLUE. Pink glow hata diya
+      (highlight line ka text-glow + underline bhi blue ho gaye).
+   2) Border par chalti lights ab border ke upar (uske center par) chalti hain,
+      moti + glow ke saath, aur colours cute + clearly visible hain:
+      jaate waqt  : butter-yellow + bubblegum-pink
+      wapas aate  : peach-orange + lilac
+   To change a colour: edit the hex values in lpA3 / lpB3 below.
+   ========================================================== */
+#letterPromise{--tc:77,225,255}
+#letterPromise,#letterPromise[data-fx]{
+  border:2px solid rgba(110,228,255,.98) !important;
+  box-shadow:0 0 0 1px rgba(170,240,255,.28),0 0 14px rgba(77,225,255,.70),0 0 34px rgba(60,190,255,.45),inset 0 0 28px rgba(77,225,255,.32),inset 0 1px 0 rgba(255,255,255,.35) !important}
+#letterPromise::before,#letterPromise[data-fx]::before{border-color:rgba(110,228,255,.95) !important;background:linear-gradient(135deg,rgba(77,225,255,.34),rgba(77,225,255,.16)) !important}
+#letterPromise .wd.pm-hl{color:#effcff;text-shadow:0 0 10px rgba(77,225,255,.9),0 0 18px rgba(77,225,255,.45)}
+#letterPromise .pm-k2{
+  background:
+    linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95) 50%,rgba(255,255,255,0)) no-repeat -60% 100%/32% 2px,
+    linear-gradient(90deg,#ffffff 0%,#b8a2ff 55%,#8fb4ff 100%) no-repeat 0 100%/0% 2px;box-shadow:0 2px 8px -2px rgba(170,150,255,.65)}
+/* runner layer now covers the whole border box, so the lights ride ON the border (not hidden under it) */
+#letterPromise .lp-run{top:-1px;left:-1px;right:auto;bottom:auto;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;border-radius:0}
+#letterPromise .lp-run rect{stroke-width:2}
+#letterPromise .lp-run .h{stroke-width:7;stroke-opacity:.32}
+#letterPromise .lp-run .rg{stroke-width:2.6;opacity:.95;filter:drop-shadow(0 0 5px rgba(90,232,255,.9))}
+#letterPromise .lp-run .r1:not(.h),#letterPromise .lp-run .r2:not(.h){filter:none}
+#letterPromise .lp-run .rf{color:#c9f7ff;stroke-width:2;filter:none}
+#letterPromise.lp-go .lp-run .r1{animation:lpA3 11s ease-in-out -.55s infinite}
+#letterPromise.lp-go .lp-run .r2{animation:lpB3 11s ease-in-out -.55s infinite}
+@keyframes lpA3{
+  0%,5%{stroke-dashoffset:0;opacity:0;color:#e0d4ff}
+  9%{opacity:1;color:#ffffff}
+  45%{stroke-dashoffset:-32;opacity:1;color:#ffffff}
+  50%{stroke-dashoffset:-32;opacity:.35;color:#e0d4ff}
+  55%{stroke-dashoffset:-32;opacity:1;color:#e0d4ff}
+  91%{opacity:1;color:#e0d4ff}
+  95%,100%{stroke-dashoffset:0;opacity:0;color:#e0d4ff}
+}
+@keyframes lpB3{
+  0%,5%{stroke-dashoffset:-84;opacity:0;color:#8fb4ff}
+  9%{opacity:1;color:#a58bff}
+  45%{stroke-dashoffset:-50;opacity:1;color:#a58bff}
+  50%{stroke-dashoffset:-50;opacity:.35;color:#8fb4ff}
+  55%{stroke-dashoffset:-50;opacity:1;color:#8fb4ff}
+  91%{opacity:1;color:#8fb4ff}
+  95%,100%{stroke-dashoffset:-84;opacity:0;color:#8fb4ff}
+}
+
+
+/* smoother last paragraph: runner layer + underline get their own layer, no per-frame blur filters */
+#letterPromise .lp-run{transform:translateZ(0);will-change:transform}
+#letterPromise .pm-k2{will-change:background-position}
+
+/* ==========================================================
+   SMOOTH SCROLLING (poori website)
+   - big card ke peeche live backdrop-filter hata diya (scroll me sabse bhaari cheez yahi thi)
+   - fixed background layers apni GPU layer par, taaki scroll me dobara paint na ho
+   - scroll ke dauraan sirf bhaari glow/filter animations ruk jaati hain, scroll rukte hi wapas chalti hain
+   ========================================================== */
+html{scroll-behavior:auto;-webkit-overflow-scrolling:touch}
+.panel,.panel:is(.turn-next,.turn-prev){-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+.sky-shade,.sky-vig,.chap-bg,body::before,body::after{transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+body.is-scrolling h1.hero-h,
+body.is-scrolling .mn-run *,
+body.is-scrolling .sn-run *,
+body.is-scrolling .lp-run *,
+body.is-scrolling .moon-note::before,body.is-scrolling .moon-note::after,
+body.is-scrolling .star-note::before,body.is-scrolling .star-note::after,
+body.is-scrolling .mn-star,body.is-scrolling .sn-star,
+body.is-scrolling .floaties span{animation-play-state:paused !important}
 </style>
 </head>
 <body>
@@ -1300,8 +1371,8 @@ function heartOfStars(){
  svg.setAttribute('viewBox',(-W/2)+' '+(-W/2)+' '+W+' '+W);svg.style.margin=(-W/2)+'px 0 0 '+(-W/2)+'px';
  svg.innerHTML='<defs><radialGradient id="hgrad" cx="50%" cy="40%" r="65%"><stop offset="0" stop-color="#ffb3e8" stop-opacity=".15"/><stop offset="1" stop-color="#ff4fb8" stop-opacity=".07"/></radialGradient></defs><path d="'+d+'Z" fill="url(#hgrad)" stroke="#ffc2ee" stroke-width="2.5" stroke-opacity=".72" stroke-linejoin="round"/>';
  box.appendChild(svg);
- svg.animate([{opacity:0,transform:'scale(.85)'},{opacity:1,transform:'scale(1)'}],{duration:1400,delay:1000,easing:'ease-out',fill:'forwards'});
- const rings=[{N:64,k:1,size:[12,12],delay:16},{N:26,k:.56,size:[9,8],delay:25}];
+ svg.animate([{opacity:0,transform:'scale(.85)'},{opacity:1,transform:'scale(1)'}],{duration:1000,delay:500,easing:'ease-out',fill:'forwards'});
+ const rings=[{N:64,k:1,size:[12,12],delay:9},{N:26,k:.56,size:[9,8],delay:14}];
  rings.forEach(r=>{
   for(let i=0;i<r.N;i++){
    const t=i/r.N*Math.PI*2,ex=hx(t,r.k),ey=hy(t,r.k);
@@ -1311,15 +1382,14 @@ function heartOfStars(){
    el.animate([{transform:`translate(${sx}px,${sy}px) scale(.3) rotate(0deg)`,opacity:0},{transform:`translate(${ex}px,${ey}px) scale(1) rotate(90deg)`,opacity:1}],{duration:1000,delay:i*r.delay,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
   }
  });
- endTimers.push(setTimeout(()=>{box.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:900,easing:'ease-in-out'});},2000));
- endTimers.push(setTimeout(()=>{box.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:800,easing:'ease-in-out'});},2950));
- endTimers.push(setTimeout(()=>{const a=box.animate([{opacity:1},{opacity:0}],{duration:900,fill:'forwards'});a.onfinish=()=>box.remove();},4100));
- endTimers.push(setTimeout(()=>box.remove(),5400));
+ endTimers.push(setTimeout(()=>{box.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:800,easing:'ease-in-out'});},1600));
+  endTimers.push(setTimeout(()=>{const a=box.animate([{opacity:1},{opacity:0}],{duration:700,fill:'forwards'});a.onfinish=()=>box.remove();},3300));
+ endTimers.push(setTimeout(()=>box.remove(),4200));
 }
 function promiseGlow(){
  const el=document.getElementById('letterPromise');
  if(!el||el.hidden||el.querySelector('.lp-run'))return;
- const r=c=>'<rect class="'+c+'" x="0" y="0" width="100%" height="100%" rx="17" pathLength="100"/>';
+ const r=c=>'<rect class="'+c+'" x="0" y="0" width="100%" height="100%" rx="18" pathLength="100"/>';
  el.insertAdjacentHTML('beforeend','<svg class="lp-run" aria-hidden="true" focusable="false"><defs><linearGradient id="lpRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7df3ff"/><stop offset=".5" stop-color="#c4fff0"/><stop offset="1" stop-color="#4de1ff"/></linearGradient></defs>'+r('rg')+r('r1 h')+r('r2 h')+r('r1')+r('r2')+r('rf')+'</svg>');
  requestAnimationFrame(()=>el.classList.add('lp-go'));
 }
@@ -1329,13 +1399,13 @@ function endingSequence(){
  if(reduce){fxPara('letterFinal');fxPara('letterPromise');['letterSign','letterWish','letterDM'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});promiseGlow();return;}
  const at=(ms,fn)=>endTimers.push(setTimeout(()=>{if(document.getElementById('letterContent'))fn();},ms));
  at(300,()=>sprinkle(['✨','✨','💜','✨']));
- at(2900,()=>{fxPara('letterPromise');promiseGlow();const e=document.getElementById('letterPromise');if(e){e.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)e.scrollIntoView({behavior:'smooth',block:'center'});}});
+ at(2100,()=>{fxPara('letterPromise');promiseGlow();const e=document.getElementById('letterPromise');if(e){e.classList.add('reveal');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)e.scrollIntoView({behavior:'smooth',block:'center'});}});
  
- at(4500,heartOfStars);
- at(7100,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2800);});
- at(7800,()=>revealEl('letterWish'));
- at(9600,()=>revealEl('letterSign'));
- at(11200,()=>revealEl('letterDM'));
+ at(6900,heartOfStars);
+ at(9500,()=>{const st=document.createElement('div');st.className='shoot-open';document.body.appendChild(st);setTimeout(()=>st.remove(),2800);});
+ at(10200,()=>revealEl('letterWish'));
+ at(12000,()=>revealEl('letterSign'));
+ at(13600,()=>revealEl('letterDM'));
 }
 function fxPara(id){
  const el=document.getElementById(id);if(!el)return;
@@ -1858,6 +1928,19 @@ render();playTurn('next');
   pg.querySelector('[data-np="prev"]').disabled=(nx===0);
   pg.querySelector('[data-np="next"]').disabled=(nx===pages.length-1);
  });
+})();
+</script>
+<script>
+/* smooth scroll helper: heavy glow animations pause only while the page is moving */
+(function(){
+ var t=null,b=document.body;
+ function on(){
+  if(!b.classList.contains('is-scrolling'))b.classList.add('is-scrolling');
+  clearTimeout(t);t=setTimeout(function(){b.classList.remove('is-scrolling');},140);
+ }
+ window.addEventListener('scroll',on,{passive:true});
+ window.addEventListener('touchmove',on,{passive:true});
+ window.addEventListener('wheel',on,{passive:true});
 })();
 </script>
 </body>
