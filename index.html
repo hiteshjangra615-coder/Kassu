@@ -1391,6 +1391,19 @@ body.is-scrolling .floaties span{animation-play-state:paused !important}
 @keyframes spEmoji{0%{opacity:0;transform:translateY(12px) scale(.15)}55%{opacity:1;transform:translateY(-4px) scale(1.4)}100%{opacity:1;transform:none}}
 @keyframes spLeaf{0%{opacity:0;transform:translate(0,6px) scale(.3) rotate(0deg)}25%{opacity:.95}100%{opacity:0;transform:translate(var(--lx),var(--ly)) scale(1) rotate(var(--lr))}}
 @media(prefers-reduced-motion:reduce){.qual.star-note,.qual.star-note.go{opacity:1!important;animation:none!important}.star-note.go .sn-text{animation:none!important}.sp-seed,.sp-leaf{display:none!important}}
+
+/* ---- chapter 1 + 2 highlighted paragraphs: words appear one by one (same feel as the last chapter's "Main hoon sunne ke liye" paragraph) ---- */
+.mn-text .wd,.sn-text .wd{display:inline-block;opacity:0;transform:translateY(6px)}
+.soft-note.moon-note .mn-text .wd{animation:wdIn .7s cubic-bezier(.22,1,.36,1) both}
+body:not(.opened) .moon-note .mn-text .wd{animation-play-state:paused!important}
+.qual.star-note.go .sn-text{animation:none}
+.qual.star-note.go .sn-text .wd{animation:wdIn .7s cubic-bezier(.22,1,.36,1) both}
+/* underline + shine wait until the words have actually appeared */
+.soft-note.moon-note .mn-text .mn-k2{animation-delay:calc(var(--st) + var(--k2,1s))}
+.soft-note.moon-note .mn-text .mn-k1{animation-delay:calc(var(--st) + var(--k1,3s))}
+.qual.star-note.go .sn-text .sn-k2{animation-delay:var(--k2,3s)}
+.qual.star-note.go .sn-text .sn-k1{animation-delay:var(--k1,5s)}
+@media(prefers-reduced-motion:reduce){.mn-text .wd,.sn-text .wd{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -1754,11 +1767,39 @@ function stopSong(){
  if(window.__songCtrl){try{window.__songCtrl.pause();}catch(_){}window.__songCtrl=null;}
  if(window.__kassuBg)window.__kassuBg.restore();
 }
+function wordifyNote(box){
+ if(!box||box.dataset.wd)return;box.dataset.wd='1';
+ const moon=box.classList.contains('mn-text'),step=.1,base=moon?.55:1.9;let n=0;
+ const walk=node=>{[...node.childNodes].forEach(c=>{
+  if(c.nodeType===3){
+   const frag=document.createDocumentFragment();
+   c.textContent.split(/(\s+)/).forEach(t=>{
+    if(!t)return;
+    if(/^\s+$/.test(t)){frag.appendChild(document.createTextNode(t));return;}
+    const sp=document.createElement('span');sp.className='wd';
+    const d=(base+n*step).toFixed(2);n++;
+    sp.style.animationDelay=moon?('calc(var(--st) + '+d+'s)'):(d+'s');
+    sp.textContent=t;frag.appendChild(sp);
+   });
+   c.replaceWith(frag);
+  }else if(c.nodeType===1){walk(c);}
+ });};
+ const k2=box.querySelector('.mn-k2,.sn-k2');
+ /* word index where the underlined line starts */
+ walk(box);
+ const all=[...box.querySelectorAll('.wd')];
+ const k2i=k2?all.indexOf(k2.querySelector('.wd')):0;
+ /* underline waits until the LAST word is in (like the last chapter), shine after that */
+ const k2t=base+(n-1)*step+1.0;
+ box.style.setProperty('--k2',k2t.toFixed(2)+'s');
+ box.style.setProperty('--k1',(k2t+1.6).toFixed(2)+'s');
+}
 function render(){
  stopSong();
  clearLetterTimer();letterStarted=false;letterComplete=false;clearMoodFx();
  clearFx();panel.dataset.ch=index;
  const c=chapters[index]; panel.innerHTML=c.render(); panel.setAttribute('aria-label',c.label);
+ panel.querySelectorAll('.mn-text,.sn-text').forEach(wordifyNote);
  const hh=panel.querySelector('h1.hero-h');
  if(hh){const words=hh.textContent.trim().split(' ');hh.textContent='';words.forEach((w,i)=>{const sp=document.createElement('span');sp.className='hw';sp.style.setProperty('--w',i);sp.textContent=w;hh.appendChild(sp);if(i<words.length-1)hh.appendChild(document.createTextNode(' '));});}
  /* every chapter gets the sparkle button (chapters 1, 6 and 8 already have their own) */
