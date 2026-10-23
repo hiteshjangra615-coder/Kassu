@@ -2050,7 +2050,7 @@ render();playTurn('next');
  var USER='silent_person5454', WEB='https://ig.me/m/'+USER;
  var btn=document.getElementById('dmBtn'); if(!btn) return;
  btn.addEventListener('click',function(e){
-  var ua=navigator.userAgent||'', android=/Android/i.test(ua), ios=/iPhone|iPad|iPod/i.test(ua);
+  var ua=navigator.userAgent||'', android=/Android/i.test(ua), ios=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1); /* newer iPads say 'Macintosh', so check touch too */
   if(!android&&!ios) return; // desktop: normal link opens ig.me in new tab
   e.preventDefault();
   btn.classList.add('pressed'); setTimeout(function(){btn.classList.remove('pressed')},180);
@@ -2061,9 +2061,8 @@ render();playTurn('next');
    // Android: intent opens Instagram app directly, no Open/Cancel popup
    window.location.href='intent://ig.me/m/'+USER+'#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url='+encodeURIComponent(WEB)+';end';
   }else{
-   // iOS: Instagram app deep link, fallback to web link if app doesn't open
-   window.location.href='instagram://user?username='+USER;
-   setTimeout(function(){ if(!left && !document.hidden) window.location.href=WEB; },1200);
+   // iPhone/iPad: ig.me is a universal link, opens the DM inside the Instagram app (profile deep link only opened the profile)
+   window.location.href=WEB;
   }
  });
 })();
