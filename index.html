@@ -1417,6 +1417,11 @@ a,button,[role="button"],.choice,.gift,.moon-wrap,.cover-env{touch-action:manipu
 @supports (min-height:100dvh){body{min-height:100dvh}}
 .fx,.floaties,.mood-fx,.fxrain{contain:paint}
 
+
+/* letter ke words: screen par aate hi halke se ubhar ke dikhte hain */
+.letter-paragraph .lw{display:inline-block;opacity:0;transform:translateY(5px);transition:opacity .55s ease,transform .55s ease}
+.letter-paragraph .lw.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.letter-paragraph .lw{transition:none}}
 </style>
 </head>
 <body>
@@ -1557,7 +1562,8 @@ let letterTimer = null;
 let letterStarted = false;
 let letterComplete = false;
 let endTimers=[];
-function clearLetterTimer(){ if(letterTimer!==null){clearTimeout(letterTimer);letterTimer=null;} endTimers.forEach(clearTimeout);endTimers=[]; }
+let letterScrollOff=null;
+function clearLetterTimer(){ if(letterScrollOff){letterScrollOff();letterScrollOff=null;} if(letterTimer!==null){clearTimeout(letterTimer);letterTimer=null;} endTimers.forEach(clearTimeout);endTimers=[]; }
 /* ---- ending: promise, signature, heart of stars, shooting star, wish ---- */
 function heartOfStars(){
  const box=document.createElement('div');box.className='heartfx';document.body.appendChild(box);
@@ -1647,23 +1653,37 @@ function startLetter(){
  if(!content||!holder)return;
  content.classList.add('open');if(open)open.disabled=true;if(skip)skip.hidden=false;
  if(matchMedia('(prefers-reduced-motion: reduce)').matches){finishLetter();return;}
- let paragraphIndex=0;
- function typeParagraph(){
+ /* SCROLL-PACED READING: saare paragraph pehle se bane hote hain (chhupe hue), aur words sirf wahi aate hain jo screen par dikh rahe hain.
+    Jaise-jaise Kaashi neeche scroll karti hai, aage ke words shuru hote hain. Poora letter padh lene ke baad hi ending shuru hoti hai. */
+ holder.innerHTML='';
+ const words=[];
+ letterParagraphs.forEach(text=>{
+  const p=document.createElement('p');p.className='letter-paragraph';
+  const parts=text.split(' ');
+  parts.forEach((w,i)=>{const sp=document.createElement('span');sp.className='lw';sp.textContent=w;p.appendChild(sp);if(i<parts.length-1)p.appendChild(document.createTextNode(' '));words.push(sp);});
+  holder.appendChild(p);
+ });
+ let wi=0,waiting=false;
+ const onScroll=()=>{if(waiting){waiting=false;clearTimeout(letterTimer);step();}};
+ window.addEventListener('scroll',onScroll,{passive:true,capture:true});
+ window.addEventListener('resize',onScroll,{passive:true});
+ letterScrollOff=()=>{window.removeEventListener('scroll',onScroll,true);window.removeEventListener('resize',onScroll);};
+ function step(){
   if(!document.getElementById('letterContent')){clearLetterTimer();return;}
-  if(paragraphIndex>=letterParagraphs.length){
-   fxPara('letterFinal');
-   letterComplete=true;if(skip)skip.hidden=true;endingSequence();return;
+  if(wi>=words.length){
+   letterScrollOff();letterScrollOff=null;
+   letterTimer=setTimeout(()=>{if(!document.getElementById('letterContent'))return;fxPara('letterFinal');letterComplete=true;if(skip)skip.hidden=true;endingSequence();},700);
+   return;
   }
-  const p=document.createElement('p');p.className='letter-paragraph';holder.appendChild(p);
-  const text=letterParagraphs[paragraphIndex];let charIndex=0;
-  function typeChar(){
-   if(!document.getElementById('letterContent')){clearLetterTimer();return;}
-   if(charIndex<text.length){p.textContent+=text.charAt(charIndex++);letterTimer=setTimeout(typeChar,9);}
-   else {paragraphIndex++;letterTimer=setTimeout(typeParagraph,420);}
-  }
-  typeChar();
+  const lim=innerHeight-28;
+  if(words[wi].getBoundingClientRect().top>lim){waiting=true;return;}   /* aage ke words neeche hain: scroll ka intezaar */
+  /* kitne words abhi screen par bache hain? zyada hon to thoda tez karo taaki scroll ke saath chale */
+  let backlog=0;for(let k=wi;k<words.length&&backlog<60;k++){if(words[k].getBoundingClientRect().top>lim)break;backlog++;}
+  const batch=backlog>40?4:backlog>20?2:1;
+  for(let k=0;k<batch&&wi<words.length;k++){words[wi].classList.add('on');wi++;}
+  letterTimer=setTimeout(step,58);
  }
- typeParagraph();
+ step();
 }
 /* ---- page-turn animation (feature 1) ---- */
 let turnTimer=null;
