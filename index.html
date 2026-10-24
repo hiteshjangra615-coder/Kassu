@@ -1415,6 +1415,7 @@ body textarea,body input{-webkit-user-select:text;user-select:text;-webkit-touch
 img,a{-webkit-user-drag:none;-webkit-touch-callout:none}
 a,button,[role="button"],.choice,.gift,.moon-wrap,.cover-env{touch-action:manipulation}
 @supports (min-height:100dvh){body{min-height:100dvh}}
+.fx,.floaties,.mood-fx,.fxrain{contain:paint}
 </style>
 </head>
 <body>
@@ -2181,6 +2182,17 @@ render();playTurn('next');
    setTimeout(function(){try{if(typeof loadSpotifyApi==='function')loadSpotifyApi(function(){});}catch(_){}},2500);
   }
  },500);
+})();
+</script>
+<script>
+/* v5: cover gayab hone ke baad (fade poora hone par) uske tare/emoji ki animation band, site halki */
+(function(){
+ var cv=document.getElementById('cover');if(!cv||!window.MutationObserver)return;
+ var done=false;
+ new MutationObserver(function(){
+  if(done||!cv.classList.contains('gone'))return;done=true;
+  setTimeout(function(){cv.style.display='none';},2200);
+ }).observe(cv,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 <script>
