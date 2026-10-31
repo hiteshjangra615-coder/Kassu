@@ -1422,6 +1422,64 @@ a,button,[role="button"],.choice,.gift,.moon-wrap,.cover-env{touch-action:manipu
 .letter-paragraph .lw{display:inline-block;opacity:0;transform:translateY(5px);transition:opacity .55s ease,transform .55s ease}
 .letter-paragraph .lw.on{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.letter-paragraph .lw{transition:none}}
+
+/* ===== PORTED FROM RIYA: chapter 3 moods + chapter 4 gifts (colours, star, glow, shimmer, popups, message animations) ===== */
+/* ===== COLOURED GIFT + MOOD BOXES, REASONS, PLAN, EFFECTS ===== */
+.gift[data-gift="0"]{--tc:255,140,210}.gift[data-gift="1"]{--tc:255,160,60}.gift[data-gift="2"]{--tc:178,130,255}.gift[data-gift="3"]{--tc:60,214,208}.gift[data-gift="4"]{--tc:255,214,90}.gift[data-gift="5"]{--tc:255,120,175}.gift[data-gift="6"]{--tc:170,238,70}.gift[data-gift="7"]{--tc:112,196,255}.gift[data-gift="8"]{--tc:255,120,170}.gift[data-gift="9"]{--tc:255,190,120}.gift[data-gift="10"]{--tc:150,200,255}
+.choice[data-mood="heavy"]{--tc:64,196,255}.choice[data-mood="tired"]{--tc:255,172,84}.choice[data-mood="alone"]{--tc:116,232,180}.choice[data-mood="happy"]{--tc:255,140,210}.choice[data-mood="khush"]{--tc:255,214,90}.choice[data-mood="miss"]{--tc:255,100,150}
+.gift.opened,.choice[data-mood].picked{box-shadow:0 0 16px rgba(var(--tc),.38),inset 0 1px 0 rgba(255,255,255,.22)!important;background:linear-gradient(135deg,rgba(var(--tc),.34),rgba(var(--tc),.12))!important;border:1.5px solid rgba(var(--tc),.92)!important}
+.gift.opened:hover,.choice[data-mood].picked:hover{background:linear-gradient(135deg,rgba(var(--tc),.48),rgba(var(--tc),.2))!important}
+.fxpop{position:fixed;z-index:60;pointer-events:none;font-size:24px;will-change:transform,opacity;animation:fxUp 2.6s ease-out forwards}
+@keyframes fxUp{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,-260px)) scale(1.25) rotate(var(--rot,0deg))}}
+@media(prefers-reduced-motion:reduce){.fxpop{display:none}}
+#moodMessage{border-radius:8px 22px 22px 22px;text-align:left}
+#moodMessage .typing{position:absolute;left:18px;top:44px;z-index:1;display:flex;gap:5px;animation:typeGone .8s both}
+#moodMessage .typing i{width:8px;height:8px;border-radius:50%;background:#fff;opacity:.5;animation:dotb .9s infinite}
+#moodMessage .typing i:nth-child(2){animation-delay:.15s}#moodMessage .typing i:nth-child(3){animation-delay:.3s}
+#moodMessage .react{display:block;position:relative;z-index:1;margin-top:6px;font-size:22px;opacity:0;animation:reactPop .5s ease both}
+@keyframes typeGone{0%,85%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes dotb{50%{opacity:1;transform:translateY(-4px)}}
+@keyframes reactPop{from{opacity:0;transform:scale(2)}to{opacity:1;transform:scale(1)}}
+
+#giftMessage{border-style:dashed!important;padding:0!important;text-align:left}
+#giftMessage .tk-top{position:relative;z-index:1;display:flex;justify-content:space-between;gap:8px;padding:13px 16px;font-size:14.5px;font-weight:600;background:rgba(var(--tc),.3);border-bottom:2px dashed rgba(255,255,255,.55)}
+#giftMessage .tk-body{position:relative;z-index:1;display:block;padding:14px 16px 10px;line-height:1.65}
+#giftMessage .tk-ft{position:relative;z-index:1;display:flex;justify-content:space-between;gap:8px;padding:0 16px 13px;font-size:12.5px;opacity:0;animation:wdIn .7s ease both}
+#giftMessage .tk-n{position:absolute;z-index:2;top:36px;width:20px;height:20px;border-radius:50%;background:#2a1262}
+#giftMessage .tk-n.l{left:-11px}#giftMessage .tk-n.r{right:-11px}
+@keyframes softGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(var(--tc),.4))}50%{filter:drop-shadow(0 0 22px rgba(var(--tc),.95))}}
+@keyframes floatY{50%{transform:translateY(-6px)}}
+/* ===== GIFT / MOOD / CARE BOXES v3: glass polish, corner star, tap pop + ring ===== */
+.gift,.choice[data-mood],.choice[data-care]{position:relative}
+.gift:not(.opened),.choice[data-mood]:not(.picked),.choice[data-care]:not(.picked){
+ background-image:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,0) 48%)!important;
+ border-color:transparent!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 22px rgba(var(--tc),.20),inset 0 0 3px rgba(var(--tc),.28),0 8px 20px rgba(var(--tc),.14),0 2px 8px rgba(20,5,50,.2)!important}
+.gift:not(.opened)::before,.choice[data-mood]:not(.picked)::before,.choice[data-care]:not(.picked)::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;z-index:1;
+ background:linear-gradient(135deg,rgba(242,228,255,.85),rgba(170,130,255,.28) 48%,rgba(255,175,220,.65));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.gift .emoji::after,.choice[data-mood] .emoji::after,.choice[data-care] .emoji::after{content:"\2726";position:absolute;top:8px;right:11px;font-size:15px;line-height:1;pointer-events:none;
+ color:rgb(var(--tc));text-shadow:0 0 8px rgba(var(--tc),1),0 0 2px rgba(255,255,255,.9);animation:gStar 3.4s ease-in-out infinite;transition:opacity .4s}
+.gift:nth-child(2n) .emoji::after,.choice:nth-child(2n) .emoji::after{animation-delay:.9s}
+.gift:nth-child(3n) .emoji::after,.choice:nth-child(3n) .emoji::after{animation-delay:1.8s}
+@keyframes gStar{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.15) rotate(12deg)}}
+.gift.opened .emoji::after,.choice[data-mood].picked .emoji::after,.choice[data-care].picked .emoji::after{animation:none;opacity:.85;transform:none}
+.gift small{letter-spacing:.2px}
+.gift .emoji,.choice[data-mood] .emoji,.choice[data-care] .emoji{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 0 7px -3px;border-radius:50%;
+ background:linear-gradient(145deg,rgba(255,255,255,.20),rgba(255,255,255,.05) 55%,rgba(255,255,255,.09));
+ border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -6px 10px rgba(255,255,255,.04),0 3px 10px rgba(20,5,50,.18)}
+.gift:not(.opened)::after,.choice[data-mood]:not(.picked)::after,.choice[data-care]:not(.picked)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
+ background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.17) 50%,transparent 60%) no-repeat;background-size:260% 100%;background-position:100% 0;
+ animation:gShim 6.5s ease-in-out infinite}
+.gift:nth-child(2n)::after,.choice:nth-child(2n)::after{animation-delay:1.2s}
+.gift:nth-child(3n)::after,.choice:nth-child(3n)::after{animation-delay:2.4s}
+@keyframes gShim{0%,68%{background-position:100% 0}100%{background-position:0 0}}
+#giftMessage.show,#moodMessage.show,#careMessage.show{animation:gMsgPop .6s cubic-bezier(.3,1.5,.5,1)}
+#giftMessage.show::before,#moodMessage.show::before,#careMessage.show::before{border:2px solid rgba(var(--tc,255,150,215),.9);animation:gMsgRing .9s ease-out forwards}
+@keyframes gMsgPop{0%{transform:scale(.94)}55%{transform:scale(1.035)}100%{transform:scale(1)}}
+@keyframes gMsgRing{0%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.gift::after,.choice[data-mood]::after,.choice[data-care]::after{animation:none;display:none}.gift .emoji::after,.choice[data-mood] .emoji::after,.choice[data-care] .emoji::after{animation:none}#giftMessage.show,#moodMessage.show,#careMessage.show{animation:none}#giftMessage.show::before,#moodMessage.show::before,#careMessage.show::before{display:none}}
+
 </style>
 </head>
 <body>
@@ -1726,16 +1784,29 @@ function clearMoodFx(){[moodfx,moodtop].forEach(el=>{if(el){el.className=el.id==
 /* ---- message touches (chapter 3 moods + chapter 4 gifts): word-by-word reveal, one glass shimmer, a small colour touch. No emoji. ---- */
 function revealWords(el,text,slow){
  el.textContent='';
+ const id=el.id,chat=id==='moodMessage',gift=id==='giftMessage';
+ const base=chat?.8:(gift?.5:0);
+ let host=el;
+ if(chat){const t0=document.createElement('span');t0.className='typing';t0.innerHTML='<i></i><i></i><i></i>';el.appendChild(t0);}
+ if(gift){
+  const n=(el.dataset.tone||'').slice(1),btn=document.querySelector('.gift[data-gift="'+n+'"]');
+  const nm=btn&&btn.querySelector('strong')?btn.querySelector('strong').textContent:'';
+  const top=document.createElement('span');top.className='tk-top';
+  const t1=document.createElement('span');t1.textContent='🎟️ '+nm;top.appendChild(t1);el.appendChild(top);
+  ['l','r'].forEach(function(k){const nt=document.createElement('i');nt.className='tk-n '+k;el.appendChild(nt);});
+  host=document.createElement('span');host.className='tk-body';el.appendChild(host);
+ }
  const words=String(text).split(/\s+/).filter(Boolean);
- const step=slow?.1:Math.min(.05,1.2/Math.max(words.length,1));
+ const step=slow?.1:(chat?.07:Math.min(.05,1.2/Math.max(words.length,1)));
  words.forEach((w,i)=>{
-  if(i)el.appendChild(document.createTextNode(' '));
+  if(i)host.appendChild(document.createTextNode(' '));
   const sp=document.createElement('span');
   sp.className='wd';
-  sp.style.animationDelay=(i*step).toFixed(3)+'s';
+  sp.style.animationDelay=(base+i*step).toFixed(3)+'s';
   sp.textContent=w;
-  el.appendChild(sp);
+  host.appendChild(sp);
  });
+ if(chat){const r0=document.createElement('span');r0.className='react';r0.textContent='💗';r0.style.animationDelay=(base+words.length*step+.4).toFixed(2)+'s';el.appendChild(r0);}
 }
 function showTouch(el,text,tone){
  el.classList.remove('show');
@@ -2222,6 +2293,20 @@ render();playTurn('next');
   var sel=window.getSelection&&window.getSelection();
   if(sel&&!sel.isCollapsed&&!inField(sel.anchorNode))sel.removeAllRanges();
  });
+})();
+</script>
+<script>
+(function(){
+function burst(list,n,dir,dur){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ for(var i=0;i<n;i++){(function(i){setTimeout(function(){var e=document.createElement('span');e.className='fxpop';e.textContent=list[Math.floor(Math.random()*list.length)];
+  var down=dir==='down';e.style.left=(8+Math.random()*84)+'vw';e.style[down?'top':'bottom']=(down?'-6vh':'8vh');
+  e.style.setProperty('--dy',(down?'':'-')+(260+Math.random()*260)+'px');e.style.setProperty('--dx',(Math.random()*80-40)+'px');e.style.setProperty('--rot',(Math.random()*60-30)+'deg');
+  e.style.fontSize=(18+Math.random()*16)+'px';if(dur)e.style.animationDuration=dur+'s';document.body.appendChild(e);setTimeout(function(){e.remove();},(dur||2.6)*1000+300);},i*(dur?220:90));})(i);}}catch(_){}}
+var GF=[['💗','💖','✨'],['🍛','☁️','🔥','✨'],['✨','💜','🌙','⭐'],['🚗','🌿','✈️','🌅'],['🌷','🌸','✨'],['🫶','💗','🤍'],['🐱','🐾','💗'],['⭐','🎶','✨','💫']];
+document.addEventListener('click',function(e){var t=e.target;if(!t||!t.closest)return;
+ var g=t.closest('.gift[data-gift]');if(g){burst(GF[Number(g.getAttribute('data-gift'))]||['✨'],14,(g.getAttribute('data-gift')==='4')?'down':'up');return;}
+ var c=t.closest('.choice[data-mood]');if(c&&c.parentNode)c.classList.add('picked');
+});
 })();
 </script>
 </body>
